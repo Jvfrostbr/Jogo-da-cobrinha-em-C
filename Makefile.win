@@ -1,17 +1,17 @@
 # Project: Jogo da cobrinha
 # Makefile created by Dev-C++ 5.11
 
-CPP      = g++.exe
-CC       = gcc.exe
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = main.o
-LINKOBJ  = main.o
-LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
-INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
-CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
-BIN      = "Jogo da cobrinha .exe"
-CXXFLAGS = $(CXXINCS) 
-CFLAGS   = $(INCS) 
+OBJ      = obj/arena.o obj/cobra.o obj/config.o obj/jogador.o obj/jogo.o obj/main.o obj/mensagens.o obj/menu.o obj/ranking.o obj/teclado.o obj/tela.o
+LINKOBJ  = obj/arena.o obj/cobra.o obj/config.o obj/jogador.o obj/jogo.o obj/main.o obj/mensagens.o obj/menu.o obj/ranking.o obj/teclado.o obj/tela.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -g3
+INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"include/"
+CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"include/"
+BIN      = "bin/Jogo da cobrinha .exe"
+CXXFLAGS = $(CXXINCS) -g3
+CFLAGS   = $(INCS) -g3
 RM       = rm.exe -f
 
 .PHONY: all all-before all-after clean clean-custom
@@ -24,5 +24,35 @@ clean: clean-custom
 $(BIN): $(OBJ)
 	$(CC) $(LINKOBJ) -o $(BIN) $(LIBS)
 
-main.o: main.c
-	$(CC) -c main.c -o main.o $(CFLAGS)
+obj/arena.o: src/arena.c
+	$(CC) -c src/arena.c -o obj/arena.o $(CFLAGS)
+
+obj/cobra.o: src/cobra.c
+	$(CC) -c src/cobra.c -o obj/cobra.o $(CFLAGS)
+
+obj/config.o: src/config.c
+	$(CC) -c src/config.c -o obj/config.o $(CFLAGS)
+
+obj/jogador.o: src/jogador.c
+	$(CC) -c src/jogador.c -o obj/jogador.o $(CFLAGS)
+
+obj/jogo.o: src/jogo.c
+	$(CC) -c src/jogo.c -o obj/jogo.o $(CFLAGS)
+
+obj/main.o: src/main.c
+	$(CC) -c src/main.c -o obj/main.o $(CFLAGS)
+
+obj/mensagens.o: src/mensagens.c
+	$(CC) -c src/mensagens.c -o obj/mensagens.o $(CFLAGS)
+
+obj/menu.o: src/menu.c
+	$(CC) -c src/menu.c -o obj/menu.o $(CFLAGS)
+
+obj/ranking.o: src/ranking.c
+	$(CC) -c src/ranking.c -o obj/ranking.o $(CFLAGS)
+
+obj/teclado.o: src/teclado.c
+	$(CC) -c src/teclado.c -o obj/teclado.o $(CFLAGS)
+
+obj/tela.o: src/tela.c
+	$(CC) -c src/tela.c -o obj/tela.o $(CFLAGS)
