@@ -6,7 +6,7 @@
 #define largura 100
 
 // Declarações de variáveis globais
-extern char tempo_formatado[20];
+extern char tempo_formatado[6];
 extern char ultima_direcao; 
 
 #endif

@@ -7,8 +7,8 @@
 #include "jogador.h"
 
 // Funções relacionadas ao ranking
-void ler_ranking_do_arquivo(FILE *f2, jogador ranking[300]);
-void ordenar_ranking(jogador ranking[300]);
+int ler_ranking_do_arquivo(FILE *f2, jogador ranking[300]);
+void ordenar_ranking(jogador ranking[], int tamanho);
 void imprimir_ranking(jogador ranking[300]);
 
 #endif // RANKING_H

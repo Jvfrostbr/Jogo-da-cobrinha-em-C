@@ -2,13 +2,16 @@
 #define JOGO_H
 
 #include <time.h>
+#include <sys/time.h>
+
 #include "cobra.h"
 #include "jogador.h"
 #include "tela.h"
 
-// Funções relacionadas à lógica do jogo
 void inicializar_jogo(jogador *jogador, cobra *cobra, char arena[altura][largura]);
-int aumentar_velocidade(int tamanho_cobra);
-
+void reiniciar_jogo(jogador *jogador, cobra *cobra, char arena[altura][largura]);
+int aumentar_velocidade_jogo(int tamanho_cobra);
+void calcular_diferenca_tempo(struct timeval *inicio, struct timeval *fim, struct timeval *resultado);
+void ajustar_tempo_inicial_com_pausa(struct timeval *tempo_inicial, struct timeval *tempo_pausa);
 #endif // JOGO_H
 
