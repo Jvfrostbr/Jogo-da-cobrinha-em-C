@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "arena.h"
-#include "config.h" // Inclui o arquivo com as globais
+#include "config.h" 
 
 // Função para criar a arena de jogo
 void criar_arena(char area[altura][largura]) {

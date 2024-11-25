@@ -1,10 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdbool.h>
 
 #include "cobra.h"
 #include "config.h"
 #include "tela.h"
+#include "menu.h"
+#include "jogador.h"
 
 void imprimir_cobra(cobra *cob, int cabeca_x_anterior, int cabeca_y_anterior) {
 	int i;
@@ -29,42 +32,42 @@ void imprimir_cobra(cobra *cob, int cabeca_x_anterior, int cabeca_y_anterior) {
 
     // Imprime a cabeça da cobra na nova posição
     posicionar_cursor(cob->cabeca_x, cob->cabeca_y);
-    printf("\033[0;32m%c\033[0m", cob->simbolo_cobra);  // Cor verde escuro para a cabeça
+    printf("\033[0;42m%c\033[0m", cob->simbolo_cobra);  // Cor verde escuro para a cabeça
 
     // Imprime cada segmento do corpo da cobra na posição atualizada
     for (i = 0; i < cob->tamanho_cobra; i++) {
         posicionar_cursor(cob->corpo_cobra[i][0], cob->corpo_cobra[i][1]);
-        printf("\033[0;92m%c\033[0m", cob->simbolo_cobra);  // Cor verde claro para o corpo
+		printf("\033[48;5;22m%c\033[0m", cob->simbolo_cobra);  // Cor verde  para resto o corpo
     }
     
     //trecho abaixo é para corrigir um pequeno bug do rastro da cobra no começo do jogo
-    if(j == 2){
+    if(j == 3){
     	posicionar_cursor(largura/ 2 , 14);
     	printf(" ");
 	}
 	j++;
 }
 
-void mover_cobra(cobra *pos_atual) {
-    char input  = verificar_input_teclado();
-    int cabeca_x_anterior = pos_atual->cabeca_x;
-    int cabeca_y_anterior = pos_atual->cabeca_y;
+void mover_cobra(cobra *cobra) {
+    char input  = verificar_input_direcional();
+    int cabeca_x_anterior = cobra->cabeca_x;
+    int cabeca_y_anterior = cobra->cabeca_y;
 
     switch(input) {
         case 'w':
-            pos_atual->cabeca_y--;
+            cobra->cabeca_y--;
             break;
         case 'a':
-            pos_atual->cabeca_x--;
+            cobra->cabeca_x--;
             break;
         case 's':
-            pos_atual->cabeca_y++;
+            cobra->cabeca_y++;
             break;
         case 'd':
-            pos_atual->cabeca_x++;
+            cobra->cabeca_x++;
             break;
     }
-	imprimir_cobra(pos_atual, cabeca_x_anterior, cabeca_y_anterior);
+    imprimir_cobra(cobra, cabeca_x_anterior, cabeca_y_anterior);
 }
 
 bool verificar_colisao(cobra dados_snk) {
@@ -87,18 +90,18 @@ bool verificar_colisao(cobra dados_snk) {
 void gerar_comida(cobra *cob, char arena[altura][largura]){
     srand(time(NULL));
     int local_valido = 0, comida_sobre_cobra,  i;
-
+		
     // Se a cobra comeu, gera uma nova comida em um lugar aleatório.
     while (!local_valido) {
         comida_sobre_cobra = 0;
-        cob->comida_x = rand() % (largura - 3) + 2;
-        cob->comida_y = rand() % (altura - 3) + 2;
+        cob->comida_x = rand() % (97) + 2;
+        cob->comida_y = rand() % (26) + 2;
 
         // Verifica se a comida não está sendo gerada em cima da cabeça da cobra
         if (cob->comida_x == cob->cabeca_x && cob->comida_y == cob->cabeca_y){
             goto reiniciar_loop;
         }
-
+		int tamanho = cob->tamanho_cobra;
         //verifica se a comida está sendo gerada em algum segmento do corpo da cobra
         for (i = 0; i < cob->tamanho_cobra && !comida_sobre_cobra; i++) {
             if (cob->comida_x == cob->corpo_cobra[i][0] && cob->comida_y == cob->corpo_cobra[i][1]) {
@@ -111,7 +114,7 @@ void gerar_comida(cobra *cob, char arena[altura][largura]){
         }
 
         // Atualiza a arena com a nova posição da comida
-        arena[cob->comida_y][cob->comida_x] = 219;
+        arena[cob->comida_y][cob->comida_x] = 32;
 
         //flag para parar o loop caso a posição da comida tenha comprido todas as condições
         local_valido = 1;
@@ -119,8 +122,7 @@ void gerar_comida(cobra *cob, char arena[altura][largura]){
         reiniciar_loop:; // Ponto de reinício do loop, caso a comida esteja na cabeça ou corpo da cobra
     }
 
-    // Desenha a comida na área
-    printf("\033[1;31m\033[%d;%dH%c\033[0m", cob->comida_y + 1, cob->comida_x + 1, arena[cob->comida_y][cob->comida_x]);
+    imprimir_comida(cob, arena);
 }
 
 bool verificar_se_cobra_comeu(cobra dados_cobra){

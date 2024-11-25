@@ -42,17 +42,16 @@ void apresentar_game_over(jogador print_dados) {
            print_dados.nome_jogador, print_dados.pontuacao, print_dados.tempo_jogado);
     Sleep(5000);
     system("cls");
-    salvar_dados_jogador(print_dados);
 }
 
 // Função para exibir uma mensagem de opção inválida
 void apresentar_opcao_invalida() {
     system("cls");
-    printf("\n\n\t\t\t\t|------------------------------|\n"
-           "\t\t\t\t|                              |\n"
-           "\t\t\t\t|     Digite uma opção válida! |\n"
-           "\t\t\t\t|                              |\n"
-           "\n\n\t\t\t\t|------------------------------|\n");
+    printf("\n\n\t\t\t\t|----------------------------------|\n"
+           "\t\t\t\t|                                  |\n"
+           "\t\t\t\t|     Digite uma opção válida!     |\n"
+           "\t\t\t\t|                                  |\n"
+           "\t\t\t\t|-----------------------------     |\n");
     Sleep(3000);			
     system("cls");
 }

@@ -1,9 +1,12 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <sys/time.h>
 
 #include "jogador.h"
 #include "tela.h"
+#include "jogo.h"
+
 
 void pedir_nome(jogador *jogador) {
     char nome[12];
@@ -21,18 +24,21 @@ void pedir_nome(jogador *jogador) {
     strcpy(jogador->nome_jogador, nome);
 }
 
-void cronometrar_tempo(jogador* dados, clock_t tempo_inicial) {
-    int tempo_jogado_em_segundos, minutos, segundos;
-    clock_t tempo_atual;
+void cronometrar_tempo(jogador* dados, struct timeval  tempo_inicial) {
+    struct timeval tempo_atual;
+    gettimeofday(&tempo_atual, NULL);
 
-    tempo_atual = clock();
-    tempo_jogado_em_segundos = (int) (tempo_atual - tempo_inicial) / CLOCKS_PER_SEC;
+    // Calculando a diferença entre tempo_atual e tempo_inicial
+    struct timeval tempo_decorrido;
+    calcular_diferenca_tempo(&tempo_inicial, &tempo_atual, &tempo_decorrido);
 
-    minutos = tempo_jogado_em_segundos / 60;
-    segundos = tempo_jogado_em_segundos % 60;
+    // Atualizando a pontuação e o tempo jogado
+    int minutos = tempo_decorrido.tv_sec / 60;
+    int segundos = tempo_decorrido.tv_sec % 60;
 
     // Formata o tempo no formato (minutos : segundos) e atualiza a variável global
     sprintf(tempo_formatado, "%02d:%02d", minutos, segundos);
+    strcpy(dados->tempo_jogado, tempo_formatado); //atualiza o tempo jogado do jogador.
 }
 
 void salvar_dados_jogador(jogador jogador) {

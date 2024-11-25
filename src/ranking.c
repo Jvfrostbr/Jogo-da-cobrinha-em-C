@@ -1,7 +1,7 @@
 #include "ranking.h"
 #include "jogador.h"
 
-void ler_ranking_do_arquivo(FILE *f2, jogador ranking[300]) {
+int ler_ranking_do_arquivo(FILE *f2, jogador ranking[300]) {
     char linha[100]; 
     int i = 0;
 	int retorno; 
@@ -22,13 +22,15 @@ void ler_ranking_do_arquivo(FILE *f2, jogador ranking[300]) {
             printf("Erro ao ler dados na linha: %s\n", linha);
         }
     }
+    
+    return i; // retorna a quantidade de dados preenchidos no array;
 }
 
-void ordenar_ranking(jogador ranking[300]) {
+void ordenar_ranking(jogador ranking[], int tamanho_preenchido) {
     int i, j;
     // Ordena o array em ordem decrescente de pontuação, em caso de empate, ordena por tempo
-    for (i = 0; i < 300 - 1; i++) {
-        for (j = i + 1; j < 300; j++) {
+    for (i = 0; i < tamanho_preenchido - 1; i++) {
+        for (j = i + 1; j < tamanho_preenchido; j++) {
             if (ranking[j].pontuacao > ranking[i].pontuacao ||
                 (ranking[j].pontuacao == ranking[i].pontuacao && strcmp(ranking[j].tempo_jogado, ranking[i].tempo_jogado) < 0)) {
                 // Troca as posições dos jogadores
