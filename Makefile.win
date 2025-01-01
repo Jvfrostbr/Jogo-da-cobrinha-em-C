@@ -4,9 +4,9 @@
 CPP      = g++.exe -D__DEBUG__
 CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = obj/arena.o obj/cobra.o obj/config.o obj/jogador.o obj/jogo.o obj/main.o obj/mensagens.o obj/menu.o obj/ranking.o obj/teclado.o obj/tela.o
-LINKOBJ  = obj/arena.o obj/cobra.o obj/config.o obj/jogador.o obj/jogo.o obj/main.o obj/mensagens.o obj/menu.o obj/ranking.o obj/teclado.o obj/tela.o
-LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -g3
+OBJ      = obj/arena.o obj/cobra.o obj/config.o obj/jogador.o obj/jogo.o obj/main.o obj/mensagens.o obj/menu.o obj/ranking.o obj/teclado.o obj/tela.o obj/musica.o obj/timer.o
+LINKOBJ  = obj/arena.o obj/cobra.o obj/config.o obj/jogador.o obj/jogo.o obj/main.o obj/mensagens.o obj/menu.o obj/ranking.o obj/teclado.o obj/tela.o obj/musica.o obj/timer.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -lwinmm -g3
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"include/"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"include/"
 BIN      = "bin/Jogo da cobrinha .exe"
@@ -56,3 +56,9 @@ obj/teclado.o: src/teclado.c
 
 obj/tela.o: src/tela.c
 	$(CC) -c src/tela.c -o obj/tela.o $(CFLAGS)
+
+obj/musica.o: src/musica.c
+	$(CC) -c src/musica.c -o obj/musica.o $(CFLAGS)
+
+obj/timer.o: src/timer.c
+	$(CC) -c src/timer.c -o obj/timer.o $(CFLAGS)
