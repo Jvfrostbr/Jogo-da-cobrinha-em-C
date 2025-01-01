@@ -2,6 +2,7 @@
 #define TELA_H
 
 #include <windows.h>
+#include <stdbool.h>
 #include "jogador.h"
 #include "config.h"
 #include "cobra.h"
@@ -14,6 +15,6 @@ void posicionar_cursor(int x, int y);
 void imprimir_pontuacao(jogador* dados);
 void imprimir_opcoes_menu_cobra();
 void imprimir_snake_menu();
-void imprimir_comida(cobra *cob, char arena[altura][largura]);
+void imprimir_comida(cobra *cob, char arena[altura][largura], bool comida_especial_ativada);
 
 #endif 

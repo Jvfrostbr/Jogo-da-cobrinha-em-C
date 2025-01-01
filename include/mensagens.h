@@ -1,7 +1,8 @@
 #ifndef MENSAGENS_H
 #define MENSAGENS_H
 
-#include "jogador.h" // Para a estrutura jogador
+#include "jogador.h"
+#include "musica.h"
 
 // Funções de exibição de mensagens ao jogador
 void apresentar_aviso_encoding();
