@@ -16,27 +16,37 @@
 #include "jogador.h"
 #include "mensagens.h"
 #include "menu.h"
+#include "musica.h"
+#include "timer.h"
+
 
 int main (){
 	redimensionar_terminal(120, 31);
 	setlocale(LC_ALL, "portuguese");
 	int velocidade_jogo, loop;
-	bool retorno_colisao, retorno_comida, quer_pausar, quer_sair = false;
+	int tempo_para_ativacao_comida, tempo_da_ativacao_comida, tempo_de_pause;
+	bool retorno_colisao, retorno_comida, retorno_comida_especial;
+	bool quer_pausar, quer_sair = false;
+	bool musica_principal_tocando, perdeu_comida_especial_tocando, game_inicio_tocando;
+	bool comida_especial_ativada;
 
 	char arena[altura][largura];
     char opcao;
-
+	
+	//Entidades:
 	jogador dados_jogador;
 	cobra dados_cobra;
 	jogador ranking[300] = {0};
+	Timer timer_comida_especial;
 	
 	struct timeval tempo_inicial, tempo_pausa_inicio, tempo_pausa_fim, duracao_em_pause;
 
-    //apresentar_aviso_encoding();
+    apresentar_aviso_encoding();
+	musica_principal_tocando = false;
 
 	do {
 		loop = 0;
-        opcao = menu_principal();
+        opcao = menu_principal(&musica_principal_tocando);
 
         switch (opcao){
             case '1': // Gameplay:
@@ -44,19 +54,50 @@ int main (){
                 pedir_nome(&dados_jogador);
                 
             //Começo do jogo:
+            	parar_musica();
                 system("cls");
                 inicializar_jogo(&dados_jogador, &dados_cobra, arena);
-				gettimeofday(&tempo_inicial, NULL); 
+                tocar_som_gameinicio();
+                game_inicio_tocando = true;
+				gettimeofday(&tempo_inicial, NULL);
+				iniciar_timer(&timer_comida_especial, rand() % 15 + 10, 10, 15); //inicia um timer_comida_especial num intervalo de 10 a 60 segundos 
                 ocultar_cursor();
                 quer_sair = false;
 
                 while(true){
+                	perdeu_comida_especial_tocando = false;
+                	
                     mover_cobra(&dados_cobra);
+                    tempo_para_ativacao_comida = verificar_tempo_para_ativacao(&timer_comida_especial);
+
+			        if (tempo_para_ativacao_comida == 0) {
+			        	comida_especial_ativada = true;
+			        	ativar_tempo_de_ativacao(&timer_comida_especial);
+                        gerar_comida(&dados_cobra, arena, true); 
+						tocar_som_comida_especial();
+			        }
+					
+					tempo_da_ativacao_comida = verificar_tempo_da_ativacao(&timer_comida_especial);
+					
+					if(tempo_da_ativacao_comida == 0){
+						comida_especial_ativada = false;
+						perdeu_comida_especial_tocando = true;
+						pausar_timer(&timer_comida_especial);
+						//faz um print nas coodedanas abaixo apagando a cor azul
+						printf("\033[%d;%dH\033[0m ", dados_cobra.comida_especial_y + 1, dados_cobra.comida_especial_x + 1);
+						tocar_som_perdeu_comida_especial();
+					}
+					
+					tempo_de_pause = verificar_tempo_de_pausa(&timer_comida_especial);
+					if(tempo_de_pause == 0){
+						reativar_timer(&timer_comida_especial);
+					}
+			        
                     quer_pausar = verificar_input_pause();
                     
                     if(quer_pausar){
 						gettimeofday(&tempo_pausa_inicio, NULL); 
-                    	quer_sair = menu_de_pause(&dados_jogador, &dados_cobra, arena);
+                    	quer_sair = menu_de_pause(&dados_jogador, &dados_cobra, arena, comida_especial_ativada);
                     	gettimeofday(&tempo_pausa_fim, NULL); 
                     	                        
 						// Calculando a duração do tempo de pausa e subtraindo o valor do tempo inicial
@@ -64,6 +105,8 @@ int main (){
 						if(!quer_sair){
 							calcular_diferenca_tempo(&tempo_pausa_inicio, &tempo_pausa_fim, &duracao_em_pause);
 	                        ajustar_tempo_inicial_com_pausa(&tempo_inicial, &duracao_em_pause);	
+	                        calcular_diferenca_tempo_timer(&timer_comida_especial, &tempo_pausa_fim, &duracao_em_pause);
+	                        ajustar_tempo_timer_com_pausa(&timer_comida_especial, &duracao_em_pause);
 						}
 					}
                     
@@ -74,14 +117,28 @@ int main (){
                     }
 					
 					retorno_comida = verificar_se_cobra_comeu(dados_cobra);
-					      
+					retorno_comida_especial = verificar_se_cobra_comeu_especial(dados_cobra, &timer_comida_especial);
+					
                     if (retorno_comida) {
-                        arena[dados_cobra.comida_y][dados_cobra.comida_x] = ' '; // remove o caractere da comida do mapa
+                    	if(!perdeu_comida_especial_tocando && !game_inicio_tocando){
+                    		tocar_som_comida();
+						}
+                        arena[dados_cobra.comida_y][dados_cobra.comida_x] = ' '; // apaga a impressão da comida da arena
                         dados_jogador.pontuacao += 10;
                         dados_cobra.tamanho_cobra++; // adiciona 1 segmento na cobra que será impresso.
-                        gerar_comida(&dados_cobra, arena);
+                        gerar_comida(&dados_cobra, arena, false);
                     }
-                    
+                    else if(retorno_comida_especial){
+                    	if(!perdeu_comida_especial_tocando){
+                    		tocar_som_comida();
+						}
+						comida_especial_ativada = false;
+                    	arena[dados_cobra.comida_especial_y][dados_cobra.comida_especial_x] = ' '; // apaga a impressão da comida da arema
+						dados_jogador.pontuacao += 20;
+						dados_cobra.tamanho_cobra += 2; // adiciona 2 segmento2 na cobra que será impresso.
+						pausar_timer(&timer_comida_especial); // pausa o timer em 15 segundos	 
+					}
+                	game_inicio_tocando = false;
                     cronometrar_tempo(&dados_jogador, tempo_inicial);
                     imprimir_tempo();
                     imprimir_pontuacao(&dados_jogador);
@@ -93,6 +150,7 @@ int main (){
                 salvar_dados_jogador(dados_jogador);
                 FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE)); // Limpa o buffer de entrada do console
                 exibir_cursor();
+                
                 loop = 0;
                 break;
 
