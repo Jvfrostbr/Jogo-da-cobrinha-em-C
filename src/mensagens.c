@@ -3,6 +3,7 @@
 
 #include "mensagens.h"
 #include "jogador.h" 
+#include "musica.h"
 
 // Função para exibir o aviso sobre encoding
 void apresentar_aviso_encoding() {
@@ -27,6 +28,7 @@ void apresentar_aviso_encoding() {
 
 // Função para exibir a tela de fim de jogo
 void apresentar_game_over(jogador print_dados) {
+	
     system("cls");
     printf("\n\n\t\t\t\t\t     |-----------------------------------|\n"
            "\t\t\t\t\t     |                                   |\n"
@@ -40,6 +42,7 @@ void apresentar_game_over(jogador print_dados) {
            "\t\t\t\t\t     |                                   |\n"
            "\t\t\t\t\t     |-----------------------------------|",
            print_dados.nome_jogador, print_dados.pontuacao, print_dados.tempo_jogado);
+    tocar_som_gameover();
     Sleep(5000);
     system("cls");
 }
@@ -59,18 +62,20 @@ void apresentar_opcao_invalida() {
 void apresentar_controles(){
 	system("cls");
 	printf("\n\n\t\t\t\t|-----------------------------------------|"
-	   "\n\t\t\t\t|                                         |"
-	   "\n\t\t\t\t|     Controles:                          |"
-	   "\n\t\t\t\t|                                         |"
-	   "\n\t\t\t\t|         cima:      W                    |"
-	   "\n\t\t\t\t|                                         |"
-	   "\n\t\t\t\t|         Esquerda:  A                    |"
-	   "\n\t\t\t\t|                                         |"
-	   "\n\t\t\t\t|         Baixo:     S                    |"
-	   "\n\t\t\t\t|                                         |"
-	   "\n\t\t\t\t|         Direita:   D                    |"
-	   "\n\t\t\t\t|                                         |"
-	   "\n\t\t\t\t|-----------------------------------------|");
+	   	   "\n\t\t\t\t|                                         |"
+	       "\n\t\t\t\t|     Controles:                          |"
+	       "\n\t\t\t\t|                                         |"
+	       "\n\t\t\t\t|         cima:      W                    |"
+	       "\n\t\t\t\t|                                         |"
+	       "\n\t\t\t\t|         Esquerda:  A                    |"
+	       "\n\t\t\t\t|                                         |"
+	       "\n\t\t\t\t|         Baixo:     S                    |"
+	       "\n\t\t\t\t|                                         |"
+	       "\n\t\t\t\t|         Direita:   D                    |"
+	       "\n\t\t\t\t|                                         |"
+	       "\n\t\t\t\t|         Pause:     P                    |"
+	       "\n\t\t\t\t|                                         |"
+	       "\n\t\t\t\t|-----------------------------------------|");
 	Sleep(5000);
 	system("cls");
 }

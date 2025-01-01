@@ -3,6 +3,8 @@
 #include <string.h>
 #include <time.h>
 #include <sys/time.h>
+#include <stdbool.h>
+
 
 #include "cobra.h"
 #include "jogador.h"
@@ -22,12 +24,11 @@ void inicializar_jogo(jogador *jogador, cobra *cobra, char arena[altura][largura
     cobra->cabeca_x = (largura - 1) / 2;
     cobra->cabeca_y = altura / 2;
  
-
-    gerar_comida(cobra, arena);
+    gerar_comida(cobra, arena, false);
     ultima_direcao = 'a';
 }
 
-void reiniciar_jogo(jogador *jogador, cobra *cobra, char arena[altura][largura]) {
+void reiniciar_jogo(jogador *jogador, cobra *cobra, char arena[altura][largura], bool comida_especial_ativada) {
     // Recria a arena
     criar_arena(arena);
     
@@ -37,8 +38,13 @@ void reiniciar_jogo(jogador *jogador, cobra *cobra, char arena[altura][largura])
     
     // Reimprime a cobra e a comida
     imprimir_cobra(cobra, cobra->corpo_cobra[0][0], cobra->corpo_cobra[0][1]);
-    arena[cobra->comida_y][cobra->comida_x] = 219;
-    printf("\033[1;31m\033[%d;%dH%c\033[0m", cobra->comida_y + 1, cobra->comida_x + 1, arena[cobra->comida_y][cobra->comida_x]);
+    arena[cobra->comida_y][cobra->comida_x] = 32;
+    imprimir_comida(cobra, arena, false); // reimprime a comida normal
+    
+    if(comida_especial_ativada){
+    	arena[cobra->comida_especial_y][cobra->comida_especial_x] = 32;
+    	imprimir_comida(cobra, arena, comida_especial_ativada); // reimprime a comida especial
+	}
 }
 
 int aumentar_velocidade_jogo(int tamanho_cobra) {
@@ -49,26 +55,26 @@ int aumentar_velocidade_jogo(int tamanho_cobra) {
     delay = delay_inicial - (tamanho_cobra * 5);
 
     // Define um limite mínimo para o delay
-    if (delay < 50) {
-        delay = 50;
+    if (delay < 40) {
+        delay = 40;
     }
 
     return delay;
 }
 
-void calcular_diferenca_tempo(struct timeval *inicio, struct timeval *fim, struct timeval *resultado) {
-    resultado->tv_sec = fim->tv_sec - inicio->tv_sec;
-    resultado->tv_usec = fim->tv_usec - inicio->tv_usec;
+void calcular_diferenca_tempo(struct timeval *inicio, struct timeval *fim, struct timeval *tempo_de_pause) {
+    tempo_de_pause->tv_sec = fim->tv_sec - inicio->tv_sec;
+    tempo_de_pause->tv_usec = fim->tv_usec - inicio->tv_usec;
 
     // Ajuste para evitar valores negativos em tv_usec
-    if (resultado->tv_usec < 0) {
-        resultado->tv_sec -= 1;
-        resultado->tv_usec += 1000000;
+    if (tempo_de_pause->tv_usec < 0) {
+        tempo_de_pause->tv_sec -= 1;
+        tempo_de_pause->tv_usec += 1000000;
     }
 }
 
 void ajustar_tempo_inicial_com_pausa(struct timeval *tempo_inicial, struct timeval *tempo_pausa) {
-    // Soma o tempo de pausa ao tempo inicial
+    // Soma a duração do tempo de pausa ao tempo inicial pois o tempo de pausa é um valor negativo 
     tempo_inicial->tv_sec += tempo_pausa->tv_sec;
     tempo_inicial->tv_usec += tempo_pausa->tv_usec;
 

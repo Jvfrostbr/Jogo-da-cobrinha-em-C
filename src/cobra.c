@@ -87,50 +87,99 @@ bool verificar_colisao(cobra dados_snk) {
     return colidiu;
 }
 
-void gerar_comida(cobra *cob, char arena[altura][largura]){
+void gerar_comida(cobra *cob, char arena[altura][largura], bool comida_especial_ativada){
     srand(time(NULL));
-    int local_valido = 0, comida_sobre_cobra,  i;
+    bool local_valido = false, comida_sobre_cobra;
+	int i;
 		
     // Se a cobra comeu, gera uma nova comida em um lugar aleatório.
     while (!local_valido) {
-        comida_sobre_cobra = 0;
-        cob->comida_x = rand() % (97) + 2;
-        cob->comida_y = rand() % (26) + 2;
+        comida_sobre_cobra = false;
+        if(comida_especial_ativada){
+            cob->comida_especial_x = rand() % (97) + 2;
+        	cob->comida_especial_y = rand() % (26) + 2;	
+        	
+        	// Verifica se a comida especial não está sendo gerada em cima da cabeça da cobra
+	        if (cob->comida_especial_x == cob->cabeca_x && cob->comida_especial_y == cob->cabeca_y){
+	            goto reiniciar_loop;
+	        }
+			int tamanho = cob->tamanho_cobra;
+			
+	        //verifica se a comida está sendo gerada em algum segmento do corpo da cobra
+	        for (i = 0; i < cob->tamanho_cobra && !comida_sobre_cobra; i++) {
+	            if (cob->comida_especial_x == cob->corpo_cobra[i][0] && cob->comida_especial_y == cob->corpo_cobra[i][1]) {
+	                comida_sobre_cobra = true; // flag para parar o loop for;
+	            }
+	        }
+	
+	        if (comida_sobre_cobra) {
+	            goto reiniciar_loop;
+	        }
+			 
+        	//verifica se a comida a ser gerada é a comida especial e se 
+			//ela está sendo gerada na mesma coordenada da comida normal
+		    if(cob->comida_especial_y == cob->comida_y && cob->comida_especial_x == cob->comida_x){
+		    	goto reiniciar_loop;	
+			}
+			
+			arena[cob->comida_especial_y][cob->comida_especial_x] = 32; // Atualiza a arena com a nova posição da comida especial
+		}
+		else{
+	        cob->comida_x = rand() % (97) + 2;
+        	cob->comida_y = rand() % (26) + 2;	
+				
+	        // Verifica se a comida não está sendo gerada em cima da cabeça da cobra
+	        if (cob->comida_x == cob->cabeca_x && cob->comida_y == cob->cabeca_y){
+	            goto reiniciar_loop;
+	        }
+			int tamanho = cob->tamanho_cobra;
+			
+	        //verifica se a comida está sendo gerada em algum segmento do corpo da cobra
+	        for (i = 0; i < cob->tamanho_cobra && !comida_sobre_cobra; i++) {
+	            if (cob->comida_x == cob->corpo_cobra[i][0] && cob->comida_y == cob->corpo_cobra[i][1]) {
+	                comida_sobre_cobra = true; // flag para parar o loop for;
+	            }
+	        }
+	
+	        if (comida_sobre_cobra) {
+	            goto reiniciar_loop;
+	        }
+			
+			//verifica se a comida a ser gerada é a comida especial e se 
+			//ela está sendo gerada na mesma coordenada da comida normal
+		    if(cob->comida_especial_y == cob->comida_y && cob->comida_especial_x == cob->comida_x){
+		    	goto reiniciar_loop;	
+			}
+			
+			arena[cob->comida_y][cob->comida_x] = 32; // Atualiza a arena com a nova posição da comida normal 	
+		}
 
-        // Verifica se a comida não está sendo gerada em cima da cabeça da cobra
-        if (cob->comida_x == cob->cabeca_x && cob->comida_y == cob->cabeca_y){
-            goto reiniciar_loop;
-        }
-		int tamanho = cob->tamanho_cobra;
-        //verifica se a comida está sendo gerada em algum segmento do corpo da cobra
-        for (i = 0; i < cob->tamanho_cobra && !comida_sobre_cobra; i++) {
-            if (cob->comida_x == cob->corpo_cobra[i][0] && cob->comida_y == cob->corpo_cobra[i][1]) {
-                comida_sobre_cobra = 1; // flag para parar o loop for;
-            }
-        }
-
-        if (comida_sobre_cobra) {
-            goto reiniciar_loop;
-        }
-
-        // Atualiza a arena com a nova posição da comida
-        arena[cob->comida_y][cob->comida_x] = 32;
-
-        //flag para parar o loop caso a posição da comida tenha comprido todas as condições
-        local_valido = 1;
+        //flag para parar o loop caso a posição da comida normal ou especial tenham cumprido todas as condições
+        local_valido = true;
 
         reiniciar_loop:; // Ponto de reinício do loop, caso a comida esteja na cabeça ou corpo da cobra
     }
 
-    imprimir_comida(cob, arena);
+    imprimir_comida(cob, arena, comida_especial_ativada);
 }
 
 bool verificar_se_cobra_comeu(cobra dados_cobra){
     bool resultado = false;
-
-    if ((dados_cobra.cabeca_x == dados_cobra.comida_x) && (dados_cobra.cabeca_y == dados_cobra.comida_y) == 1) {
+	
+    if (dados_cobra.cabeca_x == dados_cobra.comida_x && dados_cobra.cabeca_y == dados_cobra.comida_y) {
         resultado = true;
     }
     return resultado;
 }
+
+bool verificar_se_cobra_comeu_especial(cobra dados_cobra, Timer *timer_comida_especial){
+    bool resultado = false;
+	
+    if (timer_comida_especial->contando_tempo_durante_ativacao && !timer_comida_especial->pausado 
+	&& dados_cobra.comida_especial_x == dados_cobra.cabeca_x && dados_cobra.comida_especial_y == dados_cobra.cabeca_y){
+        resultado = true;
+    }
+    return resultado;
+}
+
 
