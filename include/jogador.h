@@ -5,11 +5,14 @@
 #include <time.h>
 #include <sys/time.h>
 
+#include "config.h"
+
 // Estrutura do jogador
 typedef struct  {
     char nome_jogador[12];
     int pontuacao;
     char tempo_jogado[6];
+    int mapa_jogado;
 } jogador;
 
 // Funções relacionadas ao jogador

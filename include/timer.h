@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include <time.h>
+#include "config.h"
 
 typedef struct {
     struct timeval tempo_inicial_para_ativacao; 
