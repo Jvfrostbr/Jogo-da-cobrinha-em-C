@@ -19,18 +19,19 @@
 #include "musica.h"
 #include "timer.h"
 
-
 int main (){
 	redimensionar_terminal(120, 31);
 	setlocale(LC_ALL, "portuguese");
+
 	int velocidade_jogo, loop;
 	int tempo_para_ativacao_comida, tempo_da_ativacao_comida, tempo_de_pause;
 	bool retorno_colisao, retorno_comida, retorno_comida_especial;
 	bool quer_pausar, quer_sair = false;
-	bool musica_principal_tocando, perdeu_comida_especial_tocando, game_inicio_tocando;
-	bool comida_especial_ativada;
+	bool musica_principal_tocando = false, perdeu_comida_especial_tocando, game_inicio_tocando;
+	
 
 	char arena[altura][largura];
+	int arena_int[altura][largura]; // estrutura auxiliar para algumas vericações das funções colisão e geração de comida
     char opcao;
 	
 	//Entidades:
@@ -42,7 +43,6 @@ int main (){
 	struct timeval tempo_inicial, tempo_pausa_inicio, tempo_pausa_fim, duracao_em_pause;
 
     apresentar_aviso_encoding();
-	musica_principal_tocando = false;
 
 	do {
 		loop = 0;
@@ -54,9 +54,11 @@ int main (){
                 pedir_nome(&dados_jogador);
                 
             //Começo do jogo:
-            	parar_musica();
                 system("cls");
-                inicializar_jogo(&dados_jogador, &dados_cobra, arena);
+                comida_especial_ativada = false;
+                mapa_selecionado = menu_selecionar_mapa();
+                parar_musica();
+                inicializar_jogo(&dados_jogador, &dados_cobra, arena, arena_int);
                 tocar_som_gameinicio();
                 game_inicio_tocando = true;
 				gettimeofday(&tempo_inicial, NULL);
@@ -73,7 +75,7 @@ int main (){
 			        if (tempo_para_ativacao_comida == 0) {
 			        	comida_especial_ativada = true;
 			        	ativar_tempo_de_ativacao(&timer_comida_especial);
-                        gerar_comida(&dados_cobra, arena, true); 
+                        gerar_comida(&dados_cobra, arena, arena_int,true); 
 						tocar_som_comida_especial();
 			        }
 					
@@ -97,11 +99,10 @@ int main (){
                     
                     if(quer_pausar){
 						gettimeofday(&tempo_pausa_inicio, NULL); 
-                    	quer_sair = menu_de_pause(&dados_jogador, &dados_cobra, arena, comida_especial_ativada);
+                    	quer_sair = menu_de_pause(&dados_jogador, &dados_cobra, arena, arena_int, comida_especial_ativada);
                     	gettimeofday(&tempo_pausa_fim, NULL); 
                     	                        
 						// Calculando a duração do tempo de pausa e subtraindo o valor do tempo inicial
-                        
 						if(!quer_sair){
 							calcular_diferenca_tempo(&tempo_pausa_inicio, &tempo_pausa_fim, &duracao_em_pause);
 	                        ajustar_tempo_inicial_com_pausa(&tempo_inicial, &duracao_em_pause);	
@@ -110,7 +111,7 @@ int main (){
 						}
 					}
                     
-                    retorno_colisao = verificar_colisao(dados_cobra);
+                    retorno_colisao = verificar_colisao(dados_cobra, arena_int);
                     
                     if (retorno_colisao || quer_sair){ 
                         break; 
@@ -126,7 +127,7 @@ int main (){
                         arena[dados_cobra.comida_y][dados_cobra.comida_x] = ' '; // apaga a impressão da comida da arena
                         dados_jogador.pontuacao += 10;
                         dados_cobra.tamanho_cobra++; // adiciona 1 segmento na cobra que será impresso.
-                        gerar_comida(&dados_cobra, arena, false);
+                        gerar_comida(&dados_cobra, arena, arena_int, false);
                     }
                     else if(retorno_comida_especial){
                     	if(!perdeu_comida_especial_tocando){
@@ -142,6 +143,7 @@ int main (){
                     cronometrar_tempo(&dados_jogador, tempo_inicial);
                     imprimir_tempo();
                     imprimir_pontuacao(&dados_jogador);
+                    imprimir_tempo_de_ativacao_timer(comida_especial_ativada);  	
                     velocidade_jogo = aumentar_velocidade_jogo(dados_cobra.tamanho_cobra);
                     Sleep(velocidade_jogo);
                 }
@@ -162,12 +164,24 @@ int main (){
 			        printf("Erro ao abrir o arquivo\n");
 			        exit(1);
 			    }
-						
-			    int qtd_preenchido_array = ler_ranking_do_arquivo(f2, ranking);
-			    fclose(f2);
-			    				
-			    ordenar_ranking(ranking, qtd_preenchido_array);
-			    imprimir_ranking(ranking);
+				
+				int opcao_selecionada = menu_tipo_ranking();
+				bool ordenar_por_mapa;
+				
+				qtd_preenchido_array = ler_ranking_do_arquivo(f2, ranking);
+			    	fclose(f2);
+			    	
+				if(opcao_selecionada == 1){	
+					ordenar_por_mapa = false;	
+			    	ordenar_ranking(ranking, ordenar_por_mapa);
+				}	
+				else{
+					ordenar_por_mapa = true;
+					mapa_selecionado = menu_selecionar_mapa_ranking();	
+			    	ordenar_ranking(ranking, ordenar_por_mapa);
+				}
+					
+				imprimir_ranking(ranking);
 			    loop = 0;
 			    break;
                 

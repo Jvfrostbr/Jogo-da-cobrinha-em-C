@@ -41,7 +41,7 @@ void imprimir_cobra(cobra *cob, int cabeca_x_anterior, int cabeca_y_anterior) {
     }
     
     //trecho abaixo é para corrigir um pequeno bug do rastro da cobra no começo do jogo
-    if(j == 3){
+    if(j == 3 && mapa_selecionado != 3){
     	posicionar_cursor(largura/ 2 , 14);
     	printf(" ");
 	}
@@ -70,8 +70,8 @@ void mover_cobra(cobra *cobra) {
     imprimir_cobra(cobra, cabeca_x_anterior, cabeca_y_anterior);
 }
 
-bool verificar_colisao(cobra dados_snk) {
-    int i;
+bool verificar_colisao(cobra dados_snk, int arena_int[altura][largura]) {
+    int i, cabeca_y, cabeca_x;
     bool colidiu = false;
 
     // Verifica se a cabeça da cobra colidiu com o próprio corpo:
@@ -80,14 +80,22 @@ bool verificar_colisao(cobra dados_snk) {
             colidiu = true;
         }
     }
-    // Verifica se a cabeça da cobra colidiu com as bordas da área de jogo:
+    
     if (dados_snk.cabeca_x <= 1 || dados_snk.cabeca_x >= largura || dados_snk.cabeca_y <= 1 || dados_snk.cabeca_y >= altura) {
         colidiu = true;
     }
+    
+	cabeca_y = dados_snk.cabeca_y;
+	cabeca_x = dados_snk.cabeca_x;
+	
+	// Verifica se a cabeça da cobra colidiu nas paredes internas do mapa
+	if(arena_int[cabeca_y][cabeca_x] == 1){ 
+		colidiu = true;	
+	}
     return colidiu;
 }
 
-void gerar_comida(cobra *cob, char arena[altura][largura], bool comida_especial_ativada){
+void gerar_comida(cobra *cob, char arena[altura][largura], int arena_int[altura][largura], bool comida_especial_ativada){
     srand(time(NULL));
     bool local_valido = false, comida_sobre_cobra;
 	int i;
@@ -98,7 +106,7 @@ void gerar_comida(cobra *cob, char arena[altura][largura], bool comida_especial_
         if(comida_especial_ativada){
             cob->comida_especial_x = rand() % (97) + 2;
         	cob->comida_especial_y = rand() % (26) + 2;	
-        	
+        	        	
         	// Verifica se a comida especial não está sendo gerada em cima da cabeça da cobra
 	        if (cob->comida_especial_x == cob->cabeca_x && cob->comida_especial_y == cob->cabeca_y){
 	            goto reiniciar_loop;
@@ -120,6 +128,13 @@ void gerar_comida(cobra *cob, char arena[altura][largura], bool comida_especial_
 			//ela está sendo gerada na mesma coordenada da comida normal
 		    if(cob->comida_especial_y == cob->comida_y && cob->comida_especial_x == cob->comida_x){
 		    	goto reiniciar_loop;	
+			}
+			
+			int comida_especial_x = cob->comida_especial_x;
+			int comida_especial_y = cob->comida_especial_y;
+			
+			if(arena_int[comida_especial_y][comida_especial_x] == 1){
+				goto reiniciar_loop;
 			}
 			
 			arena[cob->comida_especial_y][cob->comida_especial_x] = 32; // Atualiza a arena com a nova posição da comida especial
@@ -149,6 +164,13 @@ void gerar_comida(cobra *cob, char arena[altura][largura], bool comida_especial_
 			//ela está sendo gerada na mesma coordenada da comida normal
 		    if(cob->comida_especial_y == cob->comida_y && cob->comida_especial_x == cob->comida_x){
 		    	goto reiniciar_loop;	
+			}
+			
+			int comida_x = cob->comida_x;
+			int comida_y = cob->comida_y;
+			
+			if(arena_int[comida_y][comida_x] == 1){
+				goto reiniciar_loop;
 			}
 			
 			arena[cob->comida_y][cob->comida_x] = 32; // Atualiza a arena com a nova posição da comida normal 	

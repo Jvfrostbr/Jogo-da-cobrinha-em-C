@@ -1,7 +1,7 @@
 #include "timer.h"
-#include <stdio.h>
+#include "config.h"
 
-static struct timeval tempo_atual;
+#include <stdio.h>
 
 void iniciar_timer(Timer *timer, int duracao_para_ativacao, int duracao_da_ativacao, int duracao_da_pausa){
     
@@ -38,7 +38,6 @@ void reativar_timer(Timer *timer){
 	timer->contando_tempo_ate_ativacao = true;
 	timer->pausado = false;  
 	timer->tempo_inicial_para_ativacao = tempo_atual; // Reinicia o timer após a pausa
-
 }
 
 int verificar_tempo_para_ativacao(Timer *timer) {
@@ -76,9 +75,11 @@ int verificar_tempo_da_ativacao(Timer *timer) {
             timer->contando_tempo_durante_ativacao = false;
             tempo_restante = 0;
         }
-    }
-
+        
+    // Formata o tempo no formato (minutos : segundos) e atualiza a variável global
+    sprintf(tempo_ativacao_timer_formatado, "%00:%02d", tempo_restante);
     return tempo_restante;
+    }
 }
 
 int verificar_tempo_de_pausa(Timer *timer) {

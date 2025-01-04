@@ -5,7 +5,6 @@
 #include <sys/time.h>
 #include <stdbool.h>
 
-
 #include "cobra.h"
 #include "jogador.h"
 #include "tela.h"
@@ -13,24 +12,59 @@
 #include "config.h"
 #include "jogo.h"
 
-void inicializar_jogo(jogador *jogador, cobra *cobra, char arena[altura][largura]) {
-    criar_arena(arena);
+void posicionar_cobra(cobra *cobra){
+	switch(mapa_selecionado){
+		case 1:
+		    cobra->cabeca_x = 14;
+    		cobra->cabeca_y = altura / 2;	
+			break;
+			
+		case 2:
+		    cobra->cabeca_x = 78;
+    		cobra->cabeca_y = 15;	
+			break;
+			
+		case 3:
+		    cobra->cabeca_x = 51;
+    		cobra->cabeca_y = 6;	
+			break;
+			
+		case 4:
+		    cobra->cabeca_x = 61;
+    		cobra->cabeca_y = 9;	
+			break;
+			
+		case 5:
+		    cobra->cabeca_x = 51;
+    		cobra->cabeca_y = 14;	
+			break;
+			
+		case 6:
+		    cobra->cabeca_x = (largura - 1) / 2;
+    		cobra->cabeca_y = altura / 2;	
+			break;	
+	}	
+}
+
+
+void inicializar_jogo(jogador *jogador, cobra *cobra, char arena[altura][largura], int arena_int[altura][largura]) {
+    criar_arena(arena, arena_int, mapa_selecionado);
 
     jogador->pontuacao = 0;
     strcpy(jogador->tempo_jogado, "00 : 00");
 		
     cobra->simbolo_cobra = 32;
     cobra->tamanho_cobra = 2;
-    cobra->cabeca_x = (largura - 1) / 2;
-    cobra->cabeca_y = altura / 2;
+    
+    posicionar_cobra(cobra);
  
-    gerar_comida(cobra, arena, false);
+    gerar_comida(cobra, arena, arena_int ,false);
     ultima_direcao = 'a';
 }
 
-void reiniciar_jogo(jogador *jogador, cobra *cobra, char arena[altura][largura], bool comida_especial_ativada) {
+void reiniciar_jogo(jogador *jogador, cobra *cobra, char arena[altura][largura], int arena_int[altura][largura],bool comida_especial_ativada) {
     // Recria a arena
-    criar_arena(arena);
+    criar_arena(arena, arena_int);
     
     // Reimprime a pontuação e o tempo
     imprimir_pontuacao(jogador);
@@ -55,8 +89,8 @@ int aumentar_velocidade_jogo(int tamanho_cobra) {
     delay = delay_inicial - (tamanho_cobra * 5);
 
     // Define um limite mínimo para o delay
-    if (delay < 40) {
-        delay = 40;
+    if (delay < 50) {
+        delay = 50;
     }
 
     return delay;

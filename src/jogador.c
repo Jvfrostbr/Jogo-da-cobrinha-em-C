@@ -6,7 +6,7 @@
 #include "jogador.h"
 #include "tela.h"
 #include "jogo.h"
-
+#include "config.h"
 
 void pedir_nome(jogador *jogador) {
     char nome[12];
@@ -42,9 +42,10 @@ void cronometrar_tempo(jogador* dados, struct timeval  tempo_inicial) {
 }
 
 void salvar_dados_jogador(jogador jogador) {
+	
     FILE *file = fopen("Dados_jogador.txt", "a");
     if (file != NULL) {
-        fprintf(file, "%s %d %s\n", jogador.nome_jogador, jogador.pontuacao, jogador.tempo_jogado);
+        fprintf(file, "%s %d %d %s\n", jogador.nome_jogador, jogador.pontuacao, mapa_selecionado, jogador.tempo_jogado);
         fclose(file);
     } else {
         printf("Erro ao salvar os dados do jogador!\n");

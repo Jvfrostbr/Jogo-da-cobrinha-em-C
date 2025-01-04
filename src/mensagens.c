@@ -54,7 +54,7 @@ void apresentar_opcao_invalida() {
            "\t\t\t\t|                                  |\n"
            "\t\t\t\t|     Digite uma opção válida!     |\n"
            "\t\t\t\t|                                  |\n"
-           "\t\t\t\t|-----------------------------     |\n");
+           "\t\t\t\t|----------------------------------|\n");
     Sleep(3000);			
     system("cls");
 }
