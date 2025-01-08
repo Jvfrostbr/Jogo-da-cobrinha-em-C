@@ -36,36 +36,39 @@ void ordenar_ranking(jogador ranking[], bool ranquear_por_mapa) {
 	    // Filtra os jogadores pelo mapa selecionado
         for (i = 0; i < qtd_preenchido_array; i++) {
             if (ranking[i].mapa_jogado == mapa_selecionado) {
-                filtrado[i] = ranking[i];
+                filtrado[tamanho_filtrado] = ranking[i];
                 tamanho_filtrado++;
             }
         }
 		
-		
-        // Ordenar apenas os jogadores filtrados
-        for (i = 0; i < tamanho_filtrado - 1; i++) {
-            for (j = i + 1; j < tamanho_filtrado; j++) {
-                if (filtrado[j].pontuacao > filtrado[i].pontuacao ||
-                    (filtrado[j].pontuacao == filtrado[i].pontuacao && 
-                     strcmp(filtrado[j].tempo_jogado, filtrado[i].tempo_jogado) < 0)) {
-                    // Troca as posições dos jogadores
-                    jogador temp = filtrado[i];
-                    filtrado[i] = filtrado[j];
-                    filtrado[j] = temp;
-                }
-            }
-        }
+		if(tamanho_filtrado > 1){
+			// Ordenar apenas os jogadores filtrados
+	        for (i = 0; i < tamanho_filtrado; i++) {
+	            for (j = i + 1; j < tamanho_filtrado; j++) {
+	                if (j < tamanho_filtrado && filtrado[j].pontuacao > filtrado[i].pontuacao ||
+	                    j < tamanho_filtrado && (filtrado[j].pontuacao == filtrado[i].pontuacao && 
+	                     strcmp(filtrado[j].tempo_jogado, filtrado[i].tempo_jogado) < 0)) {
+	                    // Troca as posições dos jogadores
+	                    jogador temp = filtrado[i];
+	                    filtrado[i] = filtrado[j];
+	                    filtrado[j] = temp;
+	                }
+	            }
+	        }	
+		}
         
-    // Aqui, o array ranking está "compactado" com apenas os jogadores filtrados
-    // O tamanho final do ranking será o número de jogadores filtrados
-    qtd_preenchido_array = tamanho_filtrado;
+		// copiando os os jogadores ordernados no array ranking
+	    qtd_preenchido_array = tamanho_filtrado;
+	    for(i = 0; i < tamanho_filtrado; i++){
+	    	ranking[i] = filtrado[i];
+		}
     }
 	else {
         // Ordenar o array completo em ordem decrescente de pontuação
         for (i = 0; i < qtd_preenchido_array - 1; i++) {
             for (j = i + 1; j < qtd_preenchido_array; j++) {
-                if (ranking[j].pontuacao > ranking[i].pontuacao ||
-                    (ranking[j].pontuacao == ranking[i].pontuacao && 
+                if (j < qtd_preenchido_array && ranking[j].pontuacao > ranking[i].pontuacao ||
+                    j < qtd_preenchido_array && (ranking[j].pontuacao == ranking[i].pontuacao && 
                      strcmp(ranking[j].tempo_jogado, ranking[i].tempo_jogado) < 0)) {
                     // Troca as posições dos jogadores
                     jogador temp = ranking[i];
@@ -91,7 +94,12 @@ void imprimir_ranking(jogador ranking[300]) {
     		parar_loop = true;
 		}
 		else{
-			printf("\t\t\t\t| %-2dº lugar: %-10s - score: %-4d - tempo: %-5s - mapa: %d |\n", i + 1, ranking[i].nome_jogador, ranking[i].pontuacao, ranking[i].tempo_jogado, ranking[i].mapa_jogado);
+			if(i < 9){
+				printf("\t\t\t\t|  %dº lugar: %-10s - score: %-4d - tempo: %-5s - mapa: %d |\n", i + 1, ranking[i].nome_jogador, ranking[i].pontuacao, ranking[i].tempo_jogado, ranking[i].mapa_jogado);
+			}
+			else{
+				printf("\t\t\t\t| %-2dº lugar: %-10s - score: %-4d - tempo: %-5s - mapa: %d |\n", i + 1, ranking[i].nome_jogador, ranking[i].pontuacao, ranking[i].tempo_jogado, ranking[i].mapa_jogado);
+			}
 		}
     }
     printf("\t\t\t\t|                                                              |\n"

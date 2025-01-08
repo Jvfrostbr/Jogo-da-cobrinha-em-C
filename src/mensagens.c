@@ -61,21 +61,21 @@ void apresentar_opcao_invalida() {
 
 void apresentar_controles(){
 	system("cls");
-	printf("\n\n\t\t\t\t|-----------------------------------------|"
-	   	   "\n\t\t\t\t|                                         |"
-	       "\n\t\t\t\t|     Controles:                          |"
-	       "\n\t\t\t\t|                                         |"
-	       "\n\t\t\t\t|         cima:      W                    |"
-	       "\n\t\t\t\t|                                         |"
-	       "\n\t\t\t\t|         Esquerda:  A                    |"
-	       "\n\t\t\t\t|                                         |"
-	       "\n\t\t\t\t|         Baixo:     S                    |"
-	       "\n\t\t\t\t|                                         |"
-	       "\n\t\t\t\t|         Direita:   D                    |"
-	       "\n\t\t\t\t|                                         |"
-	       "\n\t\t\t\t|         Pause:     P                    |"
-	       "\n\t\t\t\t|                                         |"
-	       "\n\t\t\t\t|-----------------------------------------|");
+	printf("\n\n\t\t\t\t\t|-----------------------------------------|"
+	   	   "\n\t\t\t\t\t|                                         |"
+	       "\n\t\t\t\t\t|     Controles:                          |"
+	       "\n\t\t\t\t\t|                                         |"
+	       "\n\t\t\t\t\t|         cima:      W                    |"
+	       "\n\t\t\t\t\t|                                         |"
+	       "\n\t\t\t\t\t|         Esquerda:  A                    |"
+	       "\n\t\t\t\t\t|                                         |"
+	       "\n\t\t\t\t\t|         Baixo:     S                    |"
+	       "\n\t\t\t\t\t|                                         |"
+	       "\n\t\t\t\t\t|         Direita:   D                    |"
+	       "\n\t\t\t\t\t|                                         |"
+	       "\n\t\t\t\t\t|         Pause:     P                    |"
+	       "\n\t\t\t\t\t|                                         |"
+	       "\n\t\t\t\t\t|-----------------------------------------|");
 	Sleep(5000);
 	system("cls");
 }

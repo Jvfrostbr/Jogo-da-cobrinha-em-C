@@ -81,10 +81,9 @@ int menu_selecionar_mapa() {
            "\t\t\t\t|                             |                             |\n"
            "\t\t\t\t|             2- mapa 2       |       6- mapa 6             |\n"
            "\t\t\t\t|                             |                             |\n"
-           "\t\t\t\t|             3- mapa 3       |       7- Aleatório          |\n"
+           "\t\t\t\t|             3- mapa 3       |       7- mapa 7             |\n"
            "\t\t\t\t|                             |                             |\n"
-           "\t\t\t\t|             4- mapa 4       |                             |\n"
-           "\t\t\t\t|                             |                             |\n"
+           "\t\t\t\t|             4- mapa 4       |       8- Aleatório          |\n"
            "\t\t\t\t|                             |                             |\n"
            "\t\t\t\t|                                                           |\n"
            "\t\t\t\t|-----------------------------------------------------------|\n\n\t\t\t\t\t\t\t");
@@ -142,7 +141,7 @@ int menu_selecionar_mapa_ranking() {
            "\t\t\t\t|                             |                             |\n"
            "\t\t\t\t|             2- mapa 2       |       6- mapa 6             |\n"
            "\t\t\t\t|                             |                             |\n"
-           "\t\t\t\t|             3- mapa 3       |                             |\n"
+           "\t\t\t\t|             3- mapa 3       |       7- mapa 7             |\n"
            "\t\t\t\t|                             |                             |\n"
            "\t\t\t\t|             4- mapa 4       |                             |\n"
            "\t\t\t\t|                             |                             |\n"
@@ -175,7 +174,11 @@ int menu_selecionar_mapa_ranking() {
         case '6':
         	mapa_selecionado = 6;
 			break;
-				
+			
+		case '7':
+        	mapa_selecionado = 7;
+			break;
+					
         default:
             apresentar_opcao_invalida();
             menu_selecionar_mapa();

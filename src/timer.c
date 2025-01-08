@@ -46,10 +46,9 @@ int verificar_tempo_para_ativacao(Timer *timer) {
     if (!timer->contando_tempo_ate_ativacao) {
         tempo_restante = -1; // Timer inativo, retorna -1
     } else {
-        struct timeval agora;
-        gettimeofday(&agora, NULL);
+        gettimeofday(&tempo_atual, NULL);
 
-        tempo_restante = timer->duracao_para_ativacao - (int)(agora.tv_sec - timer->tempo_inicial_para_ativacao.tv_sec);
+        tempo_restante = timer->duracao_para_ativacao - (int)(tempo_atual.tv_sec - timer->tempo_inicial_para_ativacao.tv_sec);
 
         if (tempo_restante <= 0) {
             timer->contando_tempo_ate_ativacao = false;
@@ -66,10 +65,9 @@ int verificar_tempo_da_ativacao(Timer *timer) {
     if (!timer->contando_tempo_durante_ativacao) {
         tempo_restante = -1; // Timer inativo, retorna -1
     } else {
-        struct timeval agora;
-        gettimeofday(&agora, NULL);
+        gettimeofday(&tempo_atual, NULL);
 
-        tempo_restante = timer->duracao_da_ativacao - (int)(agora.tv_sec - timer->tempo_inicial_da_ativacao.tv_sec);
+        tempo_restante = timer->duracao_da_ativacao - (int)(tempo_atual.tv_sec - timer->tempo_inicial_da_ativacao.tv_sec);
 
         if (tempo_restante <= 0) {
             timer->contando_tempo_durante_ativacao = false;
@@ -88,10 +86,9 @@ int verificar_tempo_de_pausa(Timer *timer) {
     if (!timer->pausado) {
         tempo_restante = -1; // Timer não está pausado
     } else {
-        struct timeval agora;
-        gettimeofday(&agora, NULL);
+        gettimeofday(&tempo_atual, NULL);
 
-        tempo_restante = timer->duracao_da_pausa - (int)(agora.tv_sec - timer->tempo_inicial_da_pausa.tv_sec);
+        tempo_restante = timer->duracao_da_pausa - (int)(tempo_atual.tv_sec - timer->tempo_inicial_da_pausa.tv_sec);
 
         if (tempo_restante <= 0) {
             timer->pausado = false;
@@ -100,32 +97,6 @@ int verificar_tempo_de_pausa(Timer *timer) {
     }
 
     return tempo_restante;
-}
-
-
-void calcular_diferenca_tempo_timer(Timer *timer, struct timeval *fim, struct timeval *tempo_de_pause){
-    if (timer->contando_tempo_ate_ativacao) {
-        tempo_de_pause->tv_sec = fim->tv_sec - timer->tempo_inicial_para_ativacao.tv_sec;
-        tempo_de_pause->tv_usec = fim->tv_usec - timer->tempo_inicial_para_ativacao.tv_usec;
-    } 
-    else if (timer->contando_tempo_durante_ativacao) {
-        tempo_de_pause->tv_sec = fim->tv_sec - timer->tempo_inicial_da_ativacao.tv_sec;
-        tempo_de_pause->tv_usec = fim->tv_usec - timer->tempo_inicial_da_ativacao.tv_usec;
-    } 
-    else {
-        tempo_de_pause->tv_sec = fim->tv_sec - timer->tempo_inicial_da_pausa.tv_sec;
-        tempo_de_pause->tv_usec = fim->tv_usec - timer->tempo_inicial_da_pausa.tv_usec;
-    }
-
-    // Ajuste para valores negativos ou ultrapassando 1 segundo
-    if (tempo_de_pause->tv_usec < 0) {
-        tempo_de_pause->tv_sec -= 1;
-        tempo_de_pause->tv_usec += 1000000;
-    } 
-    else if (tempo_de_pause->tv_usec >= 1000000) {
-        tempo_de_pause->tv_sec += tempo_de_pause->tv_usec / 1000000;
-        tempo_de_pause->tv_usec %= 1000000;
-    }
 }
 
 void ajustar_tempo_timer_com_pausa(Timer *timer, struct timeval *tempo_pausa){

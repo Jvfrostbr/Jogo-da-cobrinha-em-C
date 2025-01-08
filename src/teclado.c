@@ -4,7 +4,6 @@
 #include "config.h" // Para acessar a variável global ultima_direcao
 
 char verificar_input_direcional() {
-    static char ultima_direcao = 'd';  // Direção inicial
 
     if (GetAsyncKeyState('W') & 0x8000 && ultima_direcao != 's') {
         ultima_direcao = 'w';

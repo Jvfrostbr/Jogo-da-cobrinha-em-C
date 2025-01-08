@@ -17,7 +17,7 @@ void criar_area_interna_mapa_1(char arena[altura][largura], int arena_int[altura
                 arena_int[i][j] = 1;	
 			}
             else if ((i == 4 || i == 26) && (j >= 13 && j <= 39 || j >= 62 && j <= 87) ||
-                (i == 8 || i == 22) && (j == 8 || j >= 15 && j <= 86 || j == 93 ) ||
+                (i == 8 || i == 22) && (j == 8 || j >= 15 && j <= 41 || j >= 60 && j <= 86 || j == 93 ) ||
                 (i >= 9 && i <= 12 || i >= 18 && i <= 21) && (j == 8 || j == 15 || j == 86 || j == 93) ||
                 (i == 13 || i == 14 || i == 16 || i == 17) && (j == 27 || j == 73) ||
                 i == 15 && (j >= 27 && j <= 73)) {
@@ -36,20 +36,21 @@ void criar_area_interna_mapa_1(char arena[altura][largura], int arena_int[altura
 
 void criar_area_interna_mapa_2(char arena[altura][largura], int arena_int[altura][largura]){
     int i, j;
-
+    
+	posicionar_cursor(0, 2);
     for (i = 2; i < altura; i++) {
-        for (j = 0; j < largura - 2; j++) {
+        for (j = 0; j < largura; j++) {
             arena[i][j] = ' ';
 			
-			if(i >= 3 && j == 1){
+			if(i >= 2 && j == 1){
 			 	printf("\033[1;47m%c\033[0m", arena[i][j]);
                 arena_int[i][j] = 1;	
 			}
-            else if ((i == 2 ) && (j == 42 || j == 55 ) ||
-            	(i == 3 || i == 4 || i >= 26 && i <= 28) && (j == 44 || j == 57) ||
+            else if ((i >= 2 && i <= 4 || i >= 26 && i <= 28) && (j == 44 || j == 57) ||
                 (i == 5 || i == 25) && (j >= 15 && j <= 33 || j == 44 || j == 57 || j >= 68 && j <= 86) ||
                 (i == 6 || i == 24) && (j == 15 || j == 33 || j == 44 || j == 57 || j == 68 || j == 86) ||
-                (i == 7 || i == 8 || i == 22 || i == 23) && (j == 15 || j == 33 || j == 68 || j == 86) ||
+                (i == 7 || i == 23) && (j == 15 || j == 33 || j == 68 || j == 86) ||
+                (i == 8 || i == 22) && (j >= 2 && j <= 4 || j >= 12  && j <= 14 || j == 15 || j == 33 || j == 68 || j >= 86 && j <= 89 || j >= 97 && j <= 99 ) ||
                 (i == 9 || i == 21) && (j == 15 || j == 24 || j == 33 || j == 68 || j == 77 || j == 86) ||
                 (i == 10 || i == 20) && (j == 15 || j == 24 || j == 33 || j >= 44 && j <= 57 || j == 68 || j == 77 || j == 86) ||
                 (i == 11 || i == 12 || i == 18 || i == 19) && (j == 15 || j == 24 || j == 33 || j == 44 || j == 57 || j == 68 || j == 77 || j == 86) ||
@@ -57,11 +58,14 @@ void criar_area_interna_mapa_2(char arena[altura][largura], int arena_int[altura
                 i == 15 && (j >= 47 && j <= 54)) {
 
                 printf("\033[1;47m%c\033[0m", arena[i][j]);
+                
                 arena_int[i][j] = 1;
             } 
 			else {
-                printf("%c", arena[i][j]);
-                arena_int[i][j] = 0;
+                if(j <= 97){
+					printf("%c", arena[i][j]);
+                	arena_int[i][j] = 0;
+				}
             }
         }
         printf("\n");
@@ -200,6 +204,43 @@ void criar_area_interna_mapa_6(char arena[altura][largura], int arena_int[altura
     }
 }
 
+void criar_area_interna_mapa_7(char arena[altura][largura], int arena_int[altura][largura]){
+    int i, j;
+	
+    for (i = 2; i < altura; i++) {
+        for (j = 0; j <= largura; j++) {
+            arena[i][j] = ' ';
+			
+			if(i >= 3 && j == 1){
+			 	printf("\033[1;47m%c\033[0m", arena[i][j]);
+                arena_int[i][j] = 1;	
+			}
+            else if ((i == 4 || i == 26 ) && (j == 45 || j == 57) ||
+            	(i == 5 || i == 25 ) && (j >= 8  && j <= 45 || j >= 57 && j <= 93) ||
+                (i == 6 || i == 7 || i == 23 || i == 24) && (j == 8 || j == 93) ||
+                (i == 8 || i == 22 ) && (j == 8 || j >= 21 && j <= 26 || j >= 76 && j <= 81 || j == 93)  ||
+                (i == 9 || i == 21) && (j >= 8  && j <= 10 || j >= 19 && j <= 21 || j == 45 || j == 57 || j >= 81 && j <= 83 || j >= 91 && j <= 93) ||
+				(i == 10 || i == 20) && (j == 8 || j == 45 || j == 57 || j == 93) ||
+				(i == 11 || i == 19) && (j == 7 || j == 8 || j == 45 || j == 57 || j == 93 || j == 94) ||
+				(i == 12 || i == 18) && (j == 21 || j >= 35 && j <= 45 || j >= 57 && j <= 67 || j == 81) ||
+				(i == 13 || i == 17) && (j == 21 || j == 81 ) ||
+				(i == 14 || i == 16) && (j == 51) || 
+				i == 15 && (j >= 48 && j <= 54)) {
+
+                printf("\033[1;47m%c\033[0m", arena[i][j]);
+                arena_int[i][j] = 1;
+            } 
+			else {
+				if(j <= 97){
+					printf("%c", arena[i][j]);
+                	arena_int[i][j] = 0;
+				}
+            }
+        }
+        printf("\n");
+    }
+}
+
 void selecionar_mapa_escolhido(char arena[altura][largura], int arena_int[altura][largura]){
     switch(mapa_selecionado){
         case 1:
@@ -226,7 +267,11 @@ void selecionar_mapa_escolhido(char arena[altura][largura], int arena_int[altura
 			criar_area_interna_mapa_6(arena, arena_int);
         	break;
         	
-        case 7 : // caso o usuário escolha um mapa aleatório
+        case 7:
+			criar_area_interna_mapa_7(arena, arena_int);
+        	break;
+        	
+        case 8 : // caso o usuário escolha um mapa aleatório
         	srand(time(NULL));
         	mapa_selecionado = rand() % 6 + 1;
         	selecionar_mapa_escolhido(arena, arena_int); 

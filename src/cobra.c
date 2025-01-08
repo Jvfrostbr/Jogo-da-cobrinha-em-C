@@ -17,7 +17,6 @@ void imprimir_cobra(cobra *cob, int cabeca_x_anterior, int cabeca_y_anterior) {
     posicionar_cursor(cob->corpo_cobra[cob->tamanho_cobra - 1][0], cob->corpo_cobra[cob->tamanho_cobra - 1][1]);
     printf(" ");
     
-
     // Atualiza o corpo da cobra, movendo cada segmento para a posição anterior
     for (i = cob->tamanho_cobra - 1; i > 0; i--) {
         cob->corpo_cobra[i][0] = cob->corpo_cobra[i - 1][0];

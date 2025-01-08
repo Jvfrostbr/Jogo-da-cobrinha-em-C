@@ -62,16 +62,16 @@ int main (){
                 tocar_som_gameinicio();
                 game_inicio_tocando = true;
 				gettimeofday(&tempo_inicial, NULL);
-				iniciar_timer(&timer_comida_especial, rand() % 15 + 10, 10, 15); //inicia um timer_comida_especial num intervalo de 10 a 60 segundos 
+				iniciar_timer(&timer_comida_especial, rand() % 20 + 10, 15, 15); //inicia um timer_comida_especial num intervalo de 10 a 60 segundos 
                 ocultar_cursor();
                 quer_sair = false;
 
                 while(true){
                 	perdeu_comida_especial_tocando = false;
-                	
                     mover_cobra(&dados_cobra);
+                    
                     tempo_para_ativacao_comida = verificar_tempo_para_ativacao(&timer_comida_especial);
-
+					
 			        if (tempo_para_ativacao_comida == 0) {
 			        	comida_especial_ativada = true;
 			        	ativar_tempo_de_ativacao(&timer_comida_especial);
@@ -106,8 +106,10 @@ int main (){
 						if(!quer_sair){
 							calcular_diferenca_tempo(&tempo_pausa_inicio, &tempo_pausa_fim, &duracao_em_pause);
 	                        ajustar_tempo_inicial_com_pausa(&tempo_inicial, &duracao_em_pause);	
-	                        calcular_diferenca_tempo_timer(&timer_comida_especial, &tempo_pausa_fim, &duracao_em_pause);
 	                        ajustar_tempo_timer_com_pausa(&timer_comida_especial, &duracao_em_pause);
+						}
+						else{
+							goto sair_do_jogo;
 						}
 					}
                     
@@ -139,6 +141,7 @@ int main (){
 						dados_cobra.tamanho_cobra += 2; // adiciona 2 segmento2 na cobra que será impresso.
 						pausar_timer(&timer_comida_especial); // pausa o timer em 15 segundos	 
 					}
+					sair_do_jogo:
                 	game_inicio_tocando = false;
                     cronometrar_tempo(&dados_jogador, tempo_inicial);
                     imprimir_tempo();

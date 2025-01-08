@@ -20,32 +20,36 @@ void posicionar_cobra(cobra *cobra){
 			break;
 			
 		case 2:
-		    cobra->cabeca_x = 78;
+		    cobra->cabeca_x = 66;
     		cobra->cabeca_y = 15;	
 			break;
 			
 		case 3:
-		    cobra->cabeca_x = 51;
+		    cobra->cabeca_x = 47;
     		cobra->cabeca_y = 6;	
 			break;
 			
 		case 4:
-		    cobra->cabeca_x = 61;
-    		cobra->cabeca_y = 9;	
+		    cobra->cabeca_x = 67;
+    		cobra->cabeca_y = 8;	
 			break;
 			
 		case 5:
-		    cobra->cabeca_x = 51;
-    		cobra->cabeca_y = 14;	
+		    cobra->cabeca_x = 60;
+    		cobra->cabeca_y = 12;	
 			break;
 			
 		case 6:
 		    cobra->cabeca_x = (largura - 1) / 2;
     		cobra->cabeca_y = altura / 2;	
 			break;	
+			
+		case 7:
+		    cobra->cabeca_x = 74;
+    		cobra->cabeca_y = 14;	
+			break;
 	}	
 }
-
 
 void inicializar_jogo(jogador *jogador, cobra *cobra, char arena[altura][largura], int arena_int[altura][largura]) {
     criar_arena(arena, arena_int, mapa_selecionado);
