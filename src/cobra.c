@@ -11,7 +11,6 @@
 
 void imprimir_cobra(cobra *cob, int cabeca_x_anterior, int cabeca_y_anterior) {
 	int i;
-	static int j = 1;
 	
     // Apaga o último segmento do corpo da cobra
     posicionar_cursor(cob->corpo_cobra[cob->tamanho_cobra - 1][0], cob->corpo_cobra[cob->tamanho_cobra - 1][1]);
@@ -38,13 +37,6 @@ void imprimir_cobra(cobra *cob, int cabeca_x_anterior, int cabeca_y_anterior) {
         posicionar_cursor(cob->corpo_cobra[i][0], cob->corpo_cobra[i][1]);
 		printf("\033[48;5;22m%c\033[0m", cob->simbolo_cobra);  // Cor verde  para resto o corpo
     }
-    
-    //trecho abaixo é para corrigir um pequeno bug do rastro da cobra no começo do jogo
-    if(j == 3 && mapa_selecionado != 3){
-    	posicionar_cursor(largura/ 2 , 14);
-    	printf(" ");
-	}
-	j++;
 }
 
 void mover_cobra(cobra *cobra) {
@@ -69,7 +61,7 @@ void mover_cobra(cobra *cobra) {
     imprimir_cobra(cobra, cabeca_x_anterior, cabeca_y_anterior);
 }
 
-bool verificar_colisao(cobra dados_snk, int arena_int[altura][largura]) {
+bool verificar_colisao(cobra dados_snk, int arena_int[28][100]) {
     int i, cabeca_y, cabeca_x;
     bool colidiu = false;
 
@@ -80,7 +72,7 @@ bool verificar_colisao(cobra dados_snk, int arena_int[altura][largura]) {
         }
     }
     
-    if (dados_snk.cabeca_x <= 1 || dados_snk.cabeca_x >= largura || dados_snk.cabeca_y <= 1 || dados_snk.cabeca_y >= altura) {
+    if (dados_snk.cabeca_x <= 1 || dados_snk.cabeca_x >= 100 || dados_snk.cabeca_y <= 1 || dados_snk.cabeca_y >= 28) {
         colidiu = true;
     }
     
@@ -94,7 +86,7 @@ bool verificar_colisao(cobra dados_snk, int arena_int[altura][largura]) {
     return colidiu;
 }
 
-void gerar_comida(cobra *cob, char arena[altura][largura], int arena_int[altura][largura], bool comida_especial_ativada){
+void gerar_comida(cobra *cob, char arena[28][100], int arena_int[28][100], bool comida_especial_ativada){
     srand(time(NULL));
     bool local_valido = false, comida_sobre_cobra;
 	int i;

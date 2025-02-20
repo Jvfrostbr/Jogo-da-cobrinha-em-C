@@ -29,9 +29,8 @@ int main (){
 	bool quer_pausar, quer_sair = false;
 	bool musica_principal_tocando = false, perdeu_comida_especial_tocando, game_inicio_tocando;
 	
-
-	char arena[altura][largura];
-	int arena_int[altura][largura]; // estrutura auxiliar para algumas vericações das funções colisão e geração de comida
+	char arena[28][100];
+	int arena_int[28][100]; // estrutura auxiliar para algumas vericações das funções colisão e geração de comida
     char opcao;
 	
 	//Entidades:
@@ -42,7 +41,7 @@ int main (){
 	
 	struct timeval tempo_inicial, tempo_pausa_inicio, tempo_pausa_fim, duracao_em_pause;
 
-    apresentar_aviso_encoding();
+    //apresentar_aviso_encoding();
 
 	do {
 		loop = 0;

@@ -59,7 +59,7 @@ void ordenar_ranking(jogador ranking[], bool ranquear_por_mapa) {
         
 		// copiando os os jogadores ordernados no array ranking
 	    qtd_preenchido_array = tamanho_filtrado;
-	    for(i = 0; i < tamanho_filtrado; i++){
+	    for(i = 0; i < 19; i++){
 	    	ranking[i] = filtrado[i];
 		}
     }
