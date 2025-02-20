@@ -10,8 +10,8 @@
 #include "tela.h"
 #include "config.h"
 
-void inicializar_jogo(jogador *jogador, cobra *cobra, char arena[altura][largura], int arena_int[altura][largura]);
-void reiniciar_jogo(jogador *jogador, cobra *cobra, char arena[altura][largura], int arena_int[altura][largura], bool comida_especial_ativada);
+void inicializar_jogo(jogador *jogador, cobra *cobra, char arena[28][100], int arena_int[28][100]);
+void reiniciar_jogo(jogador *jogador, cobra *cobra, char arena[28][100], int arena_int[28][100], bool comida_especial_ativada);
 int aumentar_velocidade_jogo(int tamanho_cobra);
 void calcular_diferenca_tempo(struct timeval *inicio, struct timeval *fim, struct timeval *tempo_de_pause);
 void ajustar_tempo_inicial_com_pausa(struct timeval *tempo_inicial, struct timeval *tempo_pausa);

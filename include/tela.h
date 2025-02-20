@@ -17,6 +17,6 @@ void imprimir_tempo();
 void imprimir_tempo_de_ativacao_timer(bool comida_especial_ativada);
 void imprimir_opcoes_menu_cobra();
 void imprimir_snake_menu();
-void imprimir_comida(cobra *cob, char arena[altura][largura], bool comida_especial_ativada);
+void imprimir_comida(cobra *cob, char arena[28][100], bool comida_especial_ativada);
 
 #endif 

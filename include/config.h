@@ -4,10 +4,6 @@
 #include <sys/time.h>
 #include <stdbool.h>
 
-// Definições globais
-#define altura 29
-#define largura 100
-
 // Declarações de variáveis globais
 extern char tempo_formatado[6];
 extern char tempo_ativacao_timer_formatado[6];
