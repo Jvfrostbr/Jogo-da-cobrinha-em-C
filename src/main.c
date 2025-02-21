@@ -41,7 +41,7 @@ int main (){
 	
 	struct timeval tempo_inicial, tempo_pausa_inicio, tempo_pausa_fim, duracao_em_pause;
 
-    //apresentar_aviso_encoding();
+    apresentar_aviso_encoding();
 
 	do {
 		loop = 0;
@@ -67,7 +67,7 @@ int main (){
 
                 while(true){
                 	perdeu_comida_especial_tocando = false;
-                    mover_cobra(&dados_cobra);
+                    mover_cobra(&dados_cobra, arena, arena_int);
                     
                     tempo_para_ativacao_comida = verificar_tempo_para_ativacao(&timer_comida_especial);
 					
@@ -179,7 +179,7 @@ int main (){
 				}	
 				else{
 					ordenar_por_mapa = true;
-					mapa_selecionado = menu_selecionar_mapa_ranking();	
+					mapa_selecionado = menu_selecionar_mapa();	
 			    	ordenar_ranking(ranking, ordenar_por_mapa);
 				}
 					

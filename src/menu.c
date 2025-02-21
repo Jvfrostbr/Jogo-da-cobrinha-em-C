@@ -12,7 +12,7 @@
 #include "tela.h"
 #include "musica.h" 
  
-bool menu_de_pause(jogador *jogador, cobra *cobra, char arena[altura][largura], int arena_int[altura][largura], bool comida_especial_ativada) {
+bool menu_de_pause(jogador *jogador, cobra *cobra, char arena[28][100], int arena_int[28][100], bool comida_especial_ativada) {
     bool sair_do_jogo = false;
     char opcao;
     
@@ -77,19 +77,25 @@ int menu_selecionar_mapa() {
            "\t\t\t\t|                                                           |\n"
            "\t\t\t\t|          Selecione o mapa que você deseja jogar:          |\n"
            "\t\t\t\t|                                                           |\n"
-           "\t\t\t\t|             1- mapa 1       |       5- mapa 5             |\n"
+           "\t\t\t\t|             0- mapa 0       |       5- mapa 5             |\n"
            "\t\t\t\t|                             |                             |\n"
-           "\t\t\t\t|             2- mapa 2       |       6- mapa 6             |\n"
+           "\t\t\t\t|             1- mapa 1       |       6- mapa 6             |\n"
            "\t\t\t\t|                             |                             |\n"
-           "\t\t\t\t|             3- mapa 3       |       7- mapa 7             |\n"
+           "\t\t\t\t|             2- mapa 2       |       7- mapa 7             |\n"
            "\t\t\t\t|                             |                             |\n"
-           "\t\t\t\t|             4- mapa 4       |       8- Aleatório          |\n"
+           "\t\t\t\t|             3- mapa 3       |       8- mapa 8             |\n"
+           "\t\t\t\t|                             |                             |\n"
+           "\t\t\t\t|             4- mapa 4       |       9- mapa 9             |\n"
            "\t\t\t\t|                             |                             |\n"
            "\t\t\t\t|                                                           |\n"
            "\t\t\t\t|-----------------------------------------------------------|\n\n\t\t\t\t\t\t\t");
     scanf(" %c", &opcao);
 
     switch (opcao) {
+        case '0':
+            mapa_selecionado = 0;
+            break;
+
         case '1':
             mapa_selecionado = 1;
             break;
@@ -105,72 +111,11 @@ int menu_selecionar_mapa() {
         case '4':
             mapa_selecionado = 4;
             break;
-
-        case '5':
-            mapa_selecionado = 5;
-            break;
             
-        case '6':
-        	mapa_selecionado = 6;
+        case '5':
+        	mapa_selecionado = 5;
 			break;
 			
-        case '7':
-        	mapa_selecionado = 7;
-			break;
-			
-        default:
-            apresentar_opcao_invalida();
-            menu_selecionar_mapa();
-            break;
-    }
-    
-    system("cls");
-    return mapa_selecionado;
-}
-
-int menu_selecionar_mapa_ranking() {
-    int mapa_selecionado = 0;
-    char opcao;
-
-    system("cls"); // Limpa o console (use "clear" no Linux/MacOS)
-    printf("\n\n\t\t\t\t|-----------------------------------------------------------|\n"
-           "\t\t\t\t|                                                           |\n"
-           "\t\t\t\t|      Selecione o mapa que você deseja ver o ranking:      |\n"
-           "\t\t\t\t|                                                           |\n"
-           "\t\t\t\t|             1- mapa 1       |       5- mapa 5             |\n"
-           "\t\t\t\t|                             |                             |\n"
-           "\t\t\t\t|             2- mapa 2       |       6- mapa 6             |\n"
-           "\t\t\t\t|                             |                             |\n"
-           "\t\t\t\t|             3- mapa 3       |       7- mapa 7             |\n"
-           "\t\t\t\t|                             |                             |\n"
-           "\t\t\t\t|             4- mapa 4       |                             |\n"
-           "\t\t\t\t|                             |                             |\n"
-           "\t\t\t\t|                             |                             |\n"
-           "\t\t\t\t|                                                           |\n"
-           "\t\t\t\t|-----------------------------------------------------------|\n\n\t\t\t\t\t\t\t");
-    scanf(" %c", &opcao);
-
-    switch (opcao) {
-        case '1':
-            mapa_selecionado = 1;
-            break;
-
-        case '2':
-            mapa_selecionado = 2;
-            break;
-
-        case '3':
-            mapa_selecionado = 3;
-            break;
-
-        case '4':
-            mapa_selecionado = 4;
-            break;
-
-        case '5':
-            mapa_selecionado = 5;
-            break;
-            
         case '6':
         	mapa_selecionado = 6;
 			break;
@@ -178,7 +123,15 @@ int menu_selecionar_mapa_ranking() {
 		case '7':
         	mapa_selecionado = 7;
 			break;
-					
+			
+		case '8':
+        	mapa_selecionado = 8;
+			break;
+			
+		case '9':
+        	mapa_selecionado = 9;
+			break;
+			
         default:
             apresentar_opcao_invalida();
             menu_selecionar_mapa();

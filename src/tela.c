@@ -60,7 +60,7 @@ void imprimir_tempo_de_ativacao_timer(bool comida_especial_ativada){
 	}
 }
 
-void imprimir_comida(cobra *cob, char arena[altura][largura], bool comida_especial_ativada) {
+void imprimir_comida(cobra *cob, char arena[28][100], bool comida_especial_ativada) {
 	
 	//se for comida especial pinta de azul e se for comida normal pinta de vermelho
 	if(comida_especial_ativada){
@@ -94,7 +94,7 @@ void imprimir_opcoes_menu_cobra(){
 //Tbm não da pra entender p*rra nenhuma, mas na impressão no terminal isso abaixo é a
 //palavra snake pintado de amarelo com um sombreamento causando uma falsa sensação de ser 3D
 void imprimir_snake_menu(){
-	printf("\n\033[0m             \033[48;5;220m             \033[48;5;94m  \033[0m     \033[48;5;220m     \033[48;5;94m  \033[0m       \033[48;5;220m     \033[48;5;94m  \033[0m    \033[48;5;220m            \033\033[48;5;94m  \033[0m     \033[48;5;220m    \033\033[48;5;94m  \033[0m     \033[48;5;220m      \033\033[48;5;94m  \033[0m \033[48;5;220m              \033\033[48;5;94m  \033[0m"
+	printf("\033[0m             \033[48;5;220m             \033[48;5;94m  \033[0m     \033[48;5;220m     \033[48;5;94m  \033[0m       \033[48;5;220m     \033[48;5;94m  \033[0m    \033[48;5;220m            \033\033[48;5;94m  \033[0m     \033[48;5;220m    \033\033[48;5;94m  \033[0m     \033[48;5;220m      \033\033[48;5;94m  \033[0m \033[48;5;220m              \033\033[48;5;94m  \033[0m"
            "\n\033[0m           \033[48;5;220m                 \033[48;5;94m  \033[0m  \033[48;5;220m       \033[48;5;94m  \033[0m      \033[48;5;220m     \033[48;5;94m  \033[0m  \033[48;5;220m                \033[48;5;94m  \033[0m  \033[48;5;220m      \033[48;5;94m  \033[0m   \033[48;5;220m      \033[48;5;94m  \033[0m \033[48;5;220m                \033[48;5;94m  \033[0m"
            "\n\033[0m          \033[48;5;220m        \033[48;5;94m  \033[0m   \033[48;5;220m      \033[48;5;94m  \033[0m \033[48;5;220m        \033[48;5;94m  \033[0m     \033[48;5;220m     \033[48;5;94m  \033[0m \033[48;5;220m      \033[48;5;94m  \033[0m    \033[48;5;220m      \033[48;5;94m  \033[0m \033[48;5;220m      \033[48;5;94m  \033[0m  \033[48;5;220m      \033[48;5;94m  \033[0m  \033[48;5;220m               \033[48;5;94m  \033[0m"
            "\n\033[0m         \033[48;5;220m        \033[48;5;94m  \033[0m             \033[48;5;220m         \033[48;5;94m  \033[0m    \033[48;5;220m     \033[48;5;94m  \033[0m \033[48;5;220m     \033[48;5;94m  \033[0m      \033[48;5;220m     \033[48;5;94m  \033[0m \033[48;5;220m      \033[48;5;94m  \033[0m \033[48;5;220m      \033[48;5;94m  \033[0m   \033[48;5;220m      \033[48;5;94m  \033[0m        "

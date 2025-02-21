@@ -9,12 +9,20 @@
 #include "menu.h"
 #include "jogador.h"
 
-void imprimir_cobra(cobra *cob, int cabeca_x_anterior, int cabeca_y_anterior) {
+void imprimir_cobra(cobra *cob, int cabeca_x_anterior, int cabeca_y_anterior, char arena[28][100], int arena_int[28][100]) {
 	int i;
 	
-    // Apaga o último segmento do corpo da cobra
-    posicionar_cursor(cob->corpo_cobra[cob->tamanho_cobra - 1][0], cob->corpo_cobra[cob->tamanho_cobra - 1][1]);
-    printf(" ");
+   // Coordenadas do último segmento da cobra
+    int x = cob->corpo_cobra[cob->tamanho_cobra - 1][0];
+    int y = cob->corpo_cobra[cob->tamanho_cobra - 1][1];
+
+    // Apaga o último segmento do corpo da cobra, caso a coodenada (x,y) da cauda da cobra seja diferente de 1 em arena_int
+    posicionar_cursor(x, y);
+    if (arena_int[y][x] == 1) {
+        printf("\033[1;47m%c\033[0m", arena[y][x]); // reimprime a parede caso esse a condição acima seja verdadeira
+    } else {
+        printf(" "); // Caso contrário, apaga normalmente
+    }
     
     // Atualiza o corpo da cobra, movendo cada segmento para a posição anterior
     for (i = cob->tamanho_cobra - 1; i > 0; i--) {
@@ -39,7 +47,7 @@ void imprimir_cobra(cobra *cob, int cabeca_x_anterior, int cabeca_y_anterior) {
     }
 }
 
-void mover_cobra(cobra *cobra) {
+void mover_cobra(cobra *cobra, char arena[28][100], int arena_int[28][100]) {
     char input  = verificar_input_direcional();
     int cabeca_x_anterior = cobra->cabeca_x;
     int cabeca_y_anterior = cobra->cabeca_y;
@@ -58,7 +66,7 @@ void mover_cobra(cobra *cobra) {
             cobra->cabeca_x++;
             break;
     }
-    imprimir_cobra(cobra, cabeca_x_anterior, cabeca_y_anterior);
+    imprimir_cobra(cobra, cabeca_x_anterior, cabeca_y_anterior, arena, arena_int);
 }
 
 bool verificar_colisao(cobra dados_snk, int arena_int[28][100]) {

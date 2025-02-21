@@ -14,44 +14,59 @@
 
 void posicionar_cobra(cobra *cobra){
 	switch(mapa_selecionado){
-		case 1:
+		case 0:
 		    cobra->cabeca_x = 14;
-    		cobra->cabeca_y = altura / 2;	
+    		cobra->cabeca_y = 28 / 2;	
 			break;
 			
-		case 2:
+		case 1:
 		    cobra->cabeca_x = 66;
     		cobra->cabeca_y = 15;	
 			break;
 			
-		case 3:
+		case 2:
 		    cobra->cabeca_x = 47;
     		cobra->cabeca_y = 6;	
 			break;
 			
-		case 4:
+		case 3:
 		    cobra->cabeca_x = 67;
     		cobra->cabeca_y = 8;	
 			break;
 			
-		case 5:
+		case 4:
 		    cobra->cabeca_x = 60;
     		cobra->cabeca_y = 12;	
 			break;
 			
-		case 6:
-		    cobra->cabeca_x = (largura - 1) / 2;
-    		cobra->cabeca_y = altura / 2;	
+		case 5:
+		    cobra->cabeca_x = (99) / 2;
+    		cobra->cabeca_y = 28 / 2;	
 			break;	
 			
-		case 7:
+		case 6:
 		    cobra->cabeca_x = 74;
     		cobra->cabeca_y = 14;	
+			break;
+			
+		case 7:
+		    cobra->cabeca_x = 66;
+    		cobra->cabeca_y = 14;	
+			break;
+			
+		case 8:
+		    cobra->cabeca_x = 51;
+    		cobra->cabeca_y = 14;	
+			break;
+			
+		case 9:
+		    cobra->cabeca_x = 51;
+    		cobra->cabeca_y = 19;	
 			break;
 	}	
 }
 
-void inicializar_jogo(jogador *jogador, cobra *cobra, char arena[altura][largura], int arena_int[altura][largura]) {
+void inicializar_jogo(jogador *jogador, cobra *cobra, char arena[28][100], int arena_int[28][100]) {
     criar_arena(arena, arena_int, mapa_selecionado);
 
     jogador->pontuacao = 0;
@@ -66,7 +81,7 @@ void inicializar_jogo(jogador *jogador, cobra *cobra, char arena[altura][largura
     ultima_direcao = 'a';
 }
 
-void reiniciar_jogo(jogador *jogador, cobra *cobra, char arena[altura][largura], int arena_int[altura][largura],bool comida_especial_ativada) {
+void reiniciar_jogo(jogador *jogador, cobra *cobra, char arena[28][100], int arena_int[28][100],bool comida_especial_ativada) {
     // Recria a arena
     criar_arena(arena, arena_int);
     
