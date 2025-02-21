@@ -90,7 +90,7 @@ void imprimir_ranking(jogador ranking[300]) {
            "\n\t\t\t\t|                                                              |\n");
 	
     for (i = 0; i < qtd_preenchido_array && !parar_loop; i++) {
-    	if(qtd_preenchido_array > 20){
+    	if(i > 19){
     		parar_loop = true;
 		}
 		else{
