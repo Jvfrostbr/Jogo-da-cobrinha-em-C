@@ -5,7 +5,7 @@
 
 // Função para criar a arena de jogo
 
-void criar_area_interna_mapa_1(char arena[28][100], int arena_int[28][100]){
+void criar_area_interna_mapa_0(char arena[28][100], int arena_int[28][100]){
     int i, j;
     
 	posicionar_cursor(0, 2);
@@ -36,7 +36,7 @@ void criar_area_interna_mapa_1(char arena[28][100], int arena_int[28][100]){
     }
 }
 
-void criar_area_interna_mapa_2(char arena[28][100], int arena_int[28][100]){
+void criar_area_interna_mapa_1(char arena[28][100], int arena_int[28][100]){
     int i, j;
     
 	posicionar_cursor(0, 2);
@@ -71,7 +71,7 @@ void criar_area_interna_mapa_2(char arena[28][100], int arena_int[28][100]){
     }
 }
 
-void criar_area_interna_mapa_3(char arena[28][100], int arena_int[28][100]){
+void criar_area_interna_mapa_2(char arena[28][100], int arena_int[28][100]){
     int i, j;
     
 	posicionar_cursor(0, 2);
@@ -104,7 +104,7 @@ void criar_area_interna_mapa_3(char arena[28][100], int arena_int[28][100]){
     }
 }
 
-void criar_area_interna_mapa_4(char arena[28][100], int arena_int[28][100]){
+void criar_area_interna_mapa_3(char arena[28][100], int arena_int[28][100]){
     int i, j;
 
     for (i = 2; i < 28; i++) {
@@ -137,7 +137,7 @@ void criar_area_interna_mapa_4(char arena[28][100], int arena_int[28][100]){
     }
 }
 
-void criar_area_interna_mapa_5(char arena[28][100], int arena_int[28][100]){
+void criar_area_interna_mapa_4(char arena[28][100], int arena_int[28][100]){
     int i, j;
 
     for (i = 2; i < 28; i++) {
@@ -168,7 +168,7 @@ void criar_area_interna_mapa_5(char arena[28][100], int arena_int[28][100]){
     }
 }
 
-void criar_area_interna_mapa_6(char arena[28][100], int arena_int[28][100]){
+void criar_area_interna_mapa_5(char arena[28][100], int arena_int[28][100]){
     int i, j;
 	posicionar_cursor(0, 2);
 	
@@ -203,7 +203,7 @@ void criar_area_interna_mapa_6(char arena[28][100], int arena_int[28][100]){
     }
 }
 
-void criar_area_interna_mapa_7(char arena[28][100], int arena_int[28][100]){
+void criar_area_interna_mapa_6(char arena[28][100], int arena_int[28][100]){
     int i, j;
 	
     for (i = 2; i < 28; i++) {
@@ -239,8 +239,115 @@ void criar_area_interna_mapa_7(char arena[28][100], int arena_int[28][100]){
     }
 }
 
+void criar_area_interna_mapa_7(char arena[28][100], int arena_int[28][100]){
+    int i, j;
+	posicionar_cursor(0, 2);
+	
+    for (i = 2; i < 28; i++) {
+        for (j = 0; j < 100 + 1; j++) {
+            arena[i][j] = ' ';
+			
+			if(i >= 2 && j == 1){
+			 	printf("\033[1;47m%c\033[0m", arena[i][j]);
+                arena_int[i][j] = 1;	
+			}
+            else if ((i == 2 || i == 3 || i == 8 || i == 9 || i == 11 || i == 18 || i == 20 || i == 21 || i == 26 || i == 27) && (j == 28 || j == 73) ||
+            	(i == 5 || i == 6 || i == 23 || i == 24) && (j >= 12  && j <= 18 || j >= 35 && j <= 45 || j >= 56 && j <= 66 || j >= 83 && j <= 89) ||
+				(i == 10 || i == 19) && (j >= 2 && j <= 8 || j >= 22 && j <= 40 || j >= 61 && j <= 79 || j >= 93 && j <= 99) ||	
+                (i == 12 || i == 17) && (j == 28 || j == 50 || j == 51 ||j == 73) ||
+				(i == 13 || i == 16) && (j >= 14 && j <= 16 || j == 50 || j == 51 || j >= 85 && j <= 87) ||
+				(i == 14 || i == 15) && (j >= 14 && j <= 16 || j >= 45 && j <= 56 || j >= 85 && j <= 87)){
+				
+                printf("\033[1;47m%c\033[0m", arena[i][j]);
+                arena_int[i][j] = 1;
+            } 
+			else {
+				if(j <= 98){
+					printf("%c", arena[i][j]);
+                	arena_int[i][j] = 0;
+				}
+            }
+        }
+        printf("\n");
+    }
+}
+
+void criar_area_interna_mapa_8(char arena[28][100], int arena_int[28][100]){
+    int i, j;
+	posicionar_cursor(0, 2);
+	
+    for (i = 2; i < 28; i++) {
+        for (j = 0; j < 100 + 1; j++) {
+            arena[i][j] = ' ';
+			
+			if(i >= 2 && j == 1){
+			 	printf("\033[1;47m%c\033[0m", arena[i][j]);
+                arena_int[i][j] = 1;	
+			}
+            else if ((i == 2 || i == 11 || i == 18 || i == 19 || i == 26 || i == 27 ) && (j == 13 || j == 50 || j == 51 || j == 88) ||
+            	(i == 3 || i == 10 ) && (j == 13 || j == 50 || j == 51 || j >= 60 && j <= 63 || j >= 76 && j <= 79 || j == 88) ||
+				(i == 4 || i == 9) && (j == 2 || j == 3 || j >= 11 && j <= 13 || j == 50 || j == 51 || j == 60 || j == 79 || j >= 88 && j <= 90 || j == 98 || j == 99) ||	
+                (i == 5 || i == 8) && (j >= 21 && j <= 41) ||
+				(i == 12 || i == 17) && (j >= 13 && j <= 25 || j >= 38 && j <= 63 || j >= 76 && j <= 88) ||
+				(i == 13 || i == 16) && (j >= 18 && j <= 20 || j == 43 || j == 44 || j == 57 || j == 58 || j >= 81 && j <= 83) ||
+				(i == 20 || i == 25) && (j == 2 || j == 3 || j >= 11 && j <= 13|| j == 50 || j == 51 || j == 69 || j == 70 || j >= 88 && j <= 90 || j == 98 || j == 99) ||
+				(i == 21 || i == 24) && (j >= 24 && j <= 39 || j == 69 || j == 70) ||
+				(i == 22 || i == 23) && (j >= 24 && j <= 39 || j >= 65 && j <= 74)){
+				
+                printf("\033[1;47m%c\033[0m", arena[i][j]);
+                arena_int[i][j] = 1;
+            } 
+			else {
+				if(j <= 98){
+					printf("%c", arena[i][j]);
+                	arena_int[i][j] = 0;
+				}
+            }
+        }
+        printf("\n");
+    }
+}
+
+void criar_area_interna_mapa_9(char arena[28][100], int arena_int[28][100]){
+    int i, j;
+	posicionar_cursor(0, 2);
+	
+    for (i = 2; i < 28; i++) {
+        for (j = 0; j < 100 + 1; j++) {
+            arena[i][j] = ' ';
+			
+			if(i >= 2 && j == 1){
+			 	printf("\033[1;47m%c\033[0m", arena[i][j]);
+                arena_int[i][j] = 1;	
+			}
+            else if ((i == 4 || i == 25) && (j >= 11 && j <= 16 || j >= 28 && j <= 33 || j == 39 || j == 40 || j >= 46 && j <= 55 || j == 61 || j == 62 || j >= 68 && j <= 73 || j >= 85 && j <= 90) ||
+            	(i == 5 || i == 6 || i == 23 || i == 24) && (j == 11 || j == 33 || j == 39 || j == 40 || j == 50 || j == 51 || j == 61 || j == 62 || j == 68 || j == 90) ||
+				(i == 7 || i == 22) && (j == 11 || j >= 18 && j <= 26 || j == 61 || j == 33 || j == 39 || j == 40 || j == 50 || j == 51 || j == 61 || j == 62 || j == 68 || j >= 75 && j <= 83 || j == 90) ||	
+				(i == 8 || i == 21) && (j == 11 || j == 18 || j == 26 || j == 61 || j == 33 || j == 39 || j == 40 || j == 50 || j == 51 || j == 61 || j == 62 || j == 68 || j == 75 || j == 83 || j == 90) ||
+				(i == 12 || i == 17) && (j == 11 || j == 22 || j == 61 || j == 33 || j == 39 || j == 40 || j >= 46 && j <= 55 || j == 61 || j == 62 || j == 68 || j == 79 || j == 90) ||
+				(i == 13 || i == 16) && (j == 11 || j >= 21 && j <= 23 || j == 61 || j == 33 || j == 39 || j == 40 || j == 50 || j == 51 || j == 61 || j == 62 || j == 68 || j >= 78 && j <= 80 || j == 90) ||
+				(i == 14 || i == 15) && (j == 11 || j >= 20 && j <= 24 || j == 61 || j == 33 || j == 39 || j == 40 || j == 50 || j == 51 || j == 61 || j == 62 || j == 68 || j >= 77 && j <= 81 || j == 90)){
+				
+                printf("\033[1;47m%c\033[0m", arena[i][j]);
+                arena_int[i][j] = 1;
+            } 
+			else {
+				if(j <= 98){
+					printf("%c", arena[i][j]);
+                	arena_int[i][j] = 0;
+				}
+            }
+        }
+        printf("\n");
+    }
+}
+
 void selecionar_mapa_escolhido(char arena[28][100], int arena_int[28][100]){
     switch(mapa_selecionado){
+        case 0:
+            criar_area_interna_mapa_0(arena, arena_int);
+        break;
+
         case 1:
             criar_area_interna_mapa_1(arena, arena_int);
         break;
@@ -256,23 +363,27 @@ void selecionar_mapa_escolhido(char arena[28][100], int arena_int[28][100]){
         case 4:
             criar_area_interna_mapa_4(arena, arena_int);
         break;
-
-        case 5:
-            criar_area_interna_mapa_5(arena, arena_int);
-        break;
         
+        case 5:
+			criar_area_interna_mapa_5(arena, arena_int);
+        break;
+        	
         case 6:
 			criar_area_interna_mapa_6(arena, arena_int);
-        	break;
+        break;
         	
-        case 7:
+        case 7: 
 			criar_area_interna_mapa_7(arena, arena_int);
-        	break;
+        break;
         	
-        case 8 : // caso o usuário escolha um mapa aleatório
-        	srand(time(NULL));
-        	mapa_selecionado = rand() % 6 + 1;
-        	selecionar_mapa_escolhido(arena, arena_int); 
+        case 8: 
+			criar_area_interna_mapa_8(arena, arena_int);
+        break;
+        	
+        case 9: 
+			criar_area_interna_mapa_9(arena, arena_int);
+        break;
+        	
     }
 }
 
