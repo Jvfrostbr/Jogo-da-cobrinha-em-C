@@ -17,8 +17,8 @@ typedef struct {
 } cobra;
 
 // Funções relacionadas à cobra
-void imprimir_cobra(cobra *cob, int cabeca_x_anterior, int cabeca_y_anterior);
-void mover_cobra(cobra *cobra);
+void imprimir_cobra(cobra *cob, int cabeca_x_anterior, int cabeca_y_anterior, char arena[28][100], int arena_int[28][100]);
+void mover_cobra(cobra *cobra, char arena[28][100], int arena_int[28][100]);
 bool verificar_colisao(cobra dados_snk, int arena_int[28][100]);
 void gerar_comida(cobra *cob, char arena[28][100], int arena_int[28][100], bool comida_especial_ativada);
 bool verificar_se_cobra_comeu(cobra dados_cobra);
